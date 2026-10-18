@@ -8,6 +8,10 @@ tonewheel organ engine. The first milestone runs the engine in-process and expos
 - one-keyboard operation with optional upper/lower or upper/lower/pedal splits;
 - VST chunk state for project save and reload.
 
+The MPC skin uses vertical, pull-down drawbars and 1.7x native label/value
+fonts. Its artwork is generated from `skin.css`; no third-party organ artwork
+is included.
+
 Every incoming channel-voice message is routed to setBfree's upper-manual MIDI
 channel. With split mode disabled the whole keyboard drives the upper manual.
 The two split modes use setBfree's native channel-A key map. MIDI note ranges in
@@ -21,7 +25,9 @@ Build from WSL or Linux with Docker/QEMU available:
 ```
 
 When Docker is unavailable but an `arm-linux-gnueabihf-gcc` toolchain is
-installed, use `./build-cross.sh` for the ARM package build.
+installed, use `./build-cross.sh` for the ARM package build. Browser artwork
+also needs Python with Pillow and Playwright Chromium; set `HTML_ART_PY` to
+that Python interpreter when it is not available on the default path.
 
 `MPC_VST` may be set to a different `mpc-vst-plugins` checkout. The default is
 the sibling workspace checkout at `../../working/research/mpc-vst-plugins`.

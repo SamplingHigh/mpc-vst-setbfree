@@ -3,16 +3,28 @@
 set -euo pipefail
 here="$(cd "$(dirname "$0")" && pwd)"
 MPC_VST="${MPC_VST:-$here/../../working/research/mpc-vst-plugins}"
+if [ -z "${HTML_ART_PY:-}" ]; then
+  if [ -x "$HOME/force-runtime/.venv-html-art/bin/python3" ]; then
+    HTML_ART_PY="$HOME/force-runtime/.venv-html-art/bin/python3"
+  else
+    HTML_ART_PY=python3
+  fi
+fi
 cc="${ARM_CC:-arm-linux-gnueabihf-gcc}"
 strip="${ARM_STRIP:-arm-linux-gnueabihf-strip}"
 
 command -v "$cc" >/dev/null || { echo "missing $cc" >&2; exit 1; }
 mkdir -p "$here/build"
 
-# Native artwork helper + generated params, skin and plugin-list entry.
-gcc -O2 -I"$MPC_VST/tools/vendor/force-shadow/tools" \
-  -o "$here/build/shadow_art" "$MPC_VST/tools/shadow_art.c" -lm
-SHADOW_ART="$here/build/shadow_art" python3 "$MPC_VST/tools/gen_vst.py" "$here/vst.json"
+# Generate params, browser-rendered artwork, skin and plugin-list entry.  The
+# tiny LF-only launcher also works from a Windows checkout where html_art.py's
+# shebang may have CRLF line endings.
+cat >"$here/build/html_art_runner" <<EOF
+#!/usr/bin/env bash
+exec "$HTML_ART_PY" "$MPC_VST/tools/html_art.py" "\$@"
+EOF
+chmod +x "$here/build/html_art_runner"
+SHADOW_ART="$here/build/html_art_runner" python3 "$MPC_VST/tools/gen_vst.py" "$here/vst.json"
 
 cd "$here"
 sources=(

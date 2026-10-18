@@ -1,0 +1,36 @@
+:root {
+  --title-size: 34px;
+  --label-size: 26px;
+  --seg-size: 24px;
+  --button-size: 26px;
+  --sheen: 0;
+  --shadow: none;
+}
+
+/* Flat, schematic tonewheel-organ drawbars: no bitmap assets are needed. */
+.look-slot {
+  fill: #090806;
+  stroke: #6a5e4c;
+  stroke-width: 1;
+}
+
+.look-tick {
+  stroke: #a99b84;
+  stroke-width: 1.5;
+}
+
+.look-fader {
+  fill: #d9c9a7;
+  stroke: #17130e;
+  stroke-width: 2;
+  filter: none;
+}
+
+.look-ridge {
+  stroke: #8f7e60;
+  stroke-width: 1.5;
+}
+
+.slider .look-line {
+  stroke: #17130e;
+}
