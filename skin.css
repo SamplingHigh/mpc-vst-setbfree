@@ -1,8 +1,8 @@
 :root {
-  --title-size: 34px;
+  --title-size: 32px;
   --label-size: 26px;
-  --seg-size: 24px;
-  --button-size: 26px;
+  --seg-size: 30px;
+  --button-size: 30px;
   --sheen: 0;
   --shadow: none;
 }
