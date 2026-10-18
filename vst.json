@@ -1,0 +1,35 @@
+{
+  "name": "setBfree Organ",
+  "vendor": "Force Runtime",
+  "uid": "SbF1",
+  "version": 1000,
+  "so": "setbfree.so",
+  "params": "params.json",
+  "layout": "layout.conf",
+  "build": {
+    "root": ".",
+    "sources": [
+      "src/setbfree_engine.c",
+      "src/dsp/src/midi.c",
+      "src/dsp/src/cfgParser.c",
+      "src/dsp/src/program.c",
+      "src/dsp/src/vibrato.c",
+      "src/dsp/src/state.c",
+      "src/dsp/src/tonegen.c",
+      "src/dsp/src/pgmParser.c",
+      "src/dsp/src/memstream.c",
+      "src/dsp/src/midnam.c",
+      "src/dsp/b_whirl/eqcomp.c",
+      "src/dsp/b_whirl/whirl.c",
+      "src/dsp/b_overdrive/overdrive.c",
+      "src/dsp/b_reverb/reverb.c"
+    ],
+    "cflags": [
+      "-DLV2SYNTH", "-DHAVE_MEMSTREAM", "-I/mv/wrapper",
+      "-I../../working/research/mpc-vst-plugins/wrapper",
+      "-Isrc/dsp/src", "-Isrc/dsp/b_overdrive",
+      "-Isrc/dsp/b_reverb", "-Isrc/dsp/b_whirl"
+    ],
+    "libs": ["-lm"]
+  }
+}
