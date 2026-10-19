@@ -107,7 +107,7 @@ static int find_param(const char *key) {
 
 static unsigned char engine_value(const param_def_t *p, int v) {
     switch (p->scale) {
-    case SCALE_DRAWBAR: return (unsigned char)(((8 - clampi(v, 0, 8)) * 127 + 4) / 8);
+    case SCALE_DRAWBAR: return (unsigned char)((clampi(v, 0, 8) * 127 + 4) / 8);
     case SCALE_PERCENT: return (unsigned char)((clampi(v, 0, 100) * 127 + 50) / 100);
     case SCALE_TOGGLE: return v ? 127 : 0;
     case SCALE_VIBRATO: return (unsigned char)((clampi(v, 0, 6) * 127 + 3) / 6);
