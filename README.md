@@ -28,12 +28,12 @@ first-generation MPC OS device and restarts the MPC application.
 ## Build and test
 
 The build uses the public
-[mpc-vst-plugins](https://github.com/sd88me/mpc-vst-plugins) porting kit. Clone
+[mpc-vst-plugins](https://github.com/SamplingHigh/mpc-vst-plugins) porting kit. Clone
 both repositories, check out the tested porting-kit revision, then point
 `MPC_VST` at the kit:
 
 ```sh
-git clone https://github.com/sd88me/mpc-vst-plugins.git
+git clone https://github.com/SamplingHigh/mpc-vst-plugins.git
 git -C mpc-vst-plugins checkout 66eca176028b5fd63622dd7769451d5e28eb11a1
 git clone https://github.com/sd88me/mpc-vst-setbfree.git
 cd mpc-vst-setbfree
