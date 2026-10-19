@@ -51,3 +51,13 @@ and restarted MPC successfully.
 - Installed binary MD5: `4c08143b3db3c8041ae32eec2e309898`.
 - The MPC Remote HTTP endpoint did not answer after this restart, so the new
   ORGAN page still needs a visual and listening check on the device.
+
+## 2026-10-19 — 0.1.14 skin readability update
+
+- Regenerated the skin with 30 px knob/drawbar names, 37 px values, and 24 px
+  selector text; updated the page background to `#2B241E`.
+- Catalog package validation passed with 0 warnings.
+- Installed the package on the Force; the installer completed, backed up
+  `MPC.settings`, and restarted MPC.
+- Confirmed one plugin-list entry, an active `acvs` service and MPC process,
+  and a matching installed `TUI.json` checksum (`2c69d33b42b8becc769055c9fb25a95a`).
