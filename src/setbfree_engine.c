@@ -1,4 +1,6 @@
-/* setBfree -> mpc_engine_t adapter.
+/* SPDX-License-Identifier: GPL-2.0-or-later
+ *
+ * setBfree -> mpc_engine_t adapter.
  *
  * The DSP is the upstream setBfree engine with its JACK/LV2 host layers removed.
  * MPC OS supplies 44.1 kHz audio in 128-frame blocks. Incoming channel messages

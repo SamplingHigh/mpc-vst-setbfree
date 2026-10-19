@@ -2,7 +2,7 @@
   "id": "setbfree",
   "name": "setBfree Organ",
   "abbrev": "B3",
-  "version": "0.1.0",
+  "version": "0.1.11",
   "description": "Tonewheel organ with overdrive, reverb, rotary speaker and optional one-keyboard manual splits",
   "author": "setBfree contributors; MPC VST port Force Runtime",
   "dsp": "dsp.so",

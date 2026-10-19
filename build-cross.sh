@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: GPL-2.0-or-later
 # Docker-free build for the workspace's Debian/Ubuntu armhf cross-toolchain.
 set -euo pipefail
 here="$(cd "$(dirname "$0")" && pwd)"
