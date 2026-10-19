@@ -802,7 +802,10 @@ findTransformerNeighbours (int w, int* ep, int* wp)
 	} else if (findEastWestNeighbours (southTransformers, w, ep, wp)) {
 		return;
 	} else {
-		assert (0);
+		/* Some wheel numbers are not present in either physical transformer
+		 * bank. A non-zero developer crosstalk setting used to abort here;
+		 * an absent neighbour simply contributes no leakage. */
+		return;
 	}
 }
 

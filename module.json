@@ -2,7 +2,7 @@
   "id": "setbfree",
   "name": "setBfree Organ",
   "abbrev": "B3",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "Tonewheel organ with overdrive, reverb, rotary speaker and optional one-keyboard manual splits",
   "author": "setBfree contributors; MPC VST port Force Runtime",
   "dsp": "dsp.so",
@@ -62,7 +62,19 @@
       {"key":"drive_character","name":"Drive Character","min":0,"max":100,"default":50,"display":"int","unit":"%"},
       {"key":"drive_input","name":"Drive Input","min":0,"max":100,"default":50,"display":"int","unit":"%"},
       {"key":"drive_output","name":"Drive Output","min":0,"max":100,"default":50,"display":"int","unit":"%"},
-      {"key":"reverb","name":"Reverb","min":0,"max":100,"default":10,"display":"int","unit":"%"}
+      {"key":"reverb","name":"Reverb","min":0,"max":100,"default":10,"display":"int","unit":"%"},
+
+      {"key":"perc_fast_time","name":"Fast Decay Time","min":0.1,"max":10.0,"default":1.0,"unit":"s"},
+      {"key":"perc_slow_time","name":"Slow Decay Time","min":0.1,"max":10.0,"default":4.0,"unit":"s"},
+      {"key":"perc_normal_level","name":"Normal Level","min":0.0,"max":1.0,"default":1.0},
+      {"key":"perc_soft_level","name":"Soft Level","min":0.0,"max":0.89125,"default":0.5012},
+      {"key":"perc_gain","name":"Percussion Gain","min":0.0,"max":22.0,"default":11.0},
+      {"key":"vibrato_upper_mode","name":"Vibrato Upper","options":["V3","V2","V1","0","C1","C2","C3"],"default":3},
+      {"key":"vibrato_lower_mode","name":"Vibrato Lower","options":["V3","V2","V1","0","C1","C2","C3"],"default":3},
+      {"key":"compartment_crosstalk","name":"Compartment Crosstalk","min":0.0,"max":1.0,"default":0.01,"dynamic_display":true},
+      {"key":"transformer_crosstalk","name":"Transformer Crosstalk","min":0.0,"max":1.0,"default":0.0,"dynamic_display":true},
+      {"key":"terminal_crosstalk","name":"Terminal Crosstalk","min":0.0,"max":1.0,"default":0.01,"dynamic_display":true},
+      {"key":"wiring_crosstalk","name":"Wiring Crosstalk","min":0.0,"max":1.0,"default":0.01,"dynamic_display":true}
     ]
   }
 }

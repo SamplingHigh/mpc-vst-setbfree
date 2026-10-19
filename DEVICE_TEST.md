@@ -40,3 +40,14 @@ The first installation attempt exposed a CRLF copy of `plugin_list.awk` that the
 device BusyBox `awk` rejected. The final release package contains the same file
 with LF line endings; the installer then completed, removed the legacy binary,
 and restarted MPC successfully.
+
+## 2026-10-19 — 0.1.13 advanced controls developer build
+
+- The host test passed with 55 parameters, chunk-state restore, NRPN control and
+  3000 concurrent screen-side parameter changes while rendering.
+- Installed the portable 0.1.13 package on the Force and restarted MPC.
+- Confirmed manifest version 0.1.13, one plugin-list entry, an active MPC service
+  and a running MPC process.
+- Installed binary MD5: `4c08143b3db3c8041ae32eec2e309898`.
+- The MPC Remote HTTP endpoint did not answer after this restart, so the new
+  ORGAN page still needs a visual and listening check on the device.

@@ -8,7 +8,8 @@
         "Upper+Lower",
         "Upper+Lower+Pedal"
       ],
-      "default": 0
+      "default": 0,
+      "qlink_ticks": 2
     },
     {
       "key": "pedal_split",
@@ -400,6 +401,103 @@
       "default": 10,
       "display": "int",
       "unit": "%"
+    },
+    {
+      "key": "perc_fast_time",
+      "name": "Fast Decay Time",
+      "min": 0.1,
+      "max": 10,
+      "default": 1,
+      "unit": "s"
+    },
+    {
+      "key": "perc_slow_time",
+      "name": "Slow Decay Time",
+      "min": 0.1,
+      "max": 10,
+      "default": 4,
+      "unit": "s"
+    },
+    {
+      "key": "perc_normal_level",
+      "name": "Normal Level",
+      "min": 0,
+      "max": 1,
+      "default": 1
+    },
+    {
+      "key": "perc_soft_level",
+      "name": "Soft Level",
+      "min": 0,
+      "max": 0.89125,
+      "default": 0.5012
+    },
+    {
+      "key": "perc_gain",
+      "name": "Percussion Gain",
+      "min": 0,
+      "max": 22,
+      "default": 11
+    },
+    {
+      "key": "vibrato_upper_mode",
+      "name": "Vibrato Upper",
+      "options": [
+        "V3",
+        "V2",
+        "V1",
+        "0",
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "default": 3
+    },
+    {
+      "key": "vibrato_lower_mode",
+      "name": "Vibrato Lower",
+      "options": [
+        "V3",
+        "V2",
+        "V1",
+        "0",
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "default": 3
+    },
+    {
+      "key": "compartment_crosstalk",
+      "name": "Compartment Crosstalk",
+      "min": 0,
+      "max": 1,
+      "default": 0.01,
+      "dynamic_display": true
+    },
+    {
+      "key": "transformer_crosstalk",
+      "name": "Transformer Crosstalk",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "dynamic_display": true
+    },
+    {
+      "key": "terminal_crosstalk",
+      "name": "Terminal Crosstalk",
+      "min": 0,
+      "max": 1,
+      "default": 0.01,
+      "dynamic_display": true
+    },
+    {
+      "key": "wiring_crosstalk",
+      "name": "Wiring Crosstalk",
+      "min": 0,
+      "max": 1,
+      "default": 0.01,
+      "dynamic_display": true
     }
   ]
 }
