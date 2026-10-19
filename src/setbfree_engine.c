@@ -43,7 +43,7 @@ static const param_def_t defs[PARAM_COUNT] = {
 
     {"upper_16", "upper.drawbar16", 8, SCALE_DRAWBAR},
     {"upper_5_13", "upper.drawbar513", 8, SCALE_DRAWBAR},
-    {"upper_8", "upper.drawbar8", 6, SCALE_DRAWBAR},
+    {"upper_8", "upper.drawbar8", 8, SCALE_DRAWBAR},
     {"upper_4", "upper.drawbar4", 0, SCALE_DRAWBAR},
     {"upper_2_23", "upper.drawbar223", 0, SCALE_DRAWBAR},
     {"upper_2", "upper.drawbar2", 0, SCALE_DRAWBAR},
@@ -51,19 +51,19 @@ static const param_def_t defs[PARAM_COUNT] = {
     {"upper_1_13", "upper.drawbar113", 0, SCALE_DRAWBAR},
     {"upper_1", "upper.drawbar1", 0, SCALE_DRAWBAR},
 
-    {"lower_16", "lower.drawbar16", 0, SCALE_DRAWBAR},
-    {"lower_5_13", "lower.drawbar513", 5, SCALE_DRAWBAR},
-    {"lower_8", "lower.drawbar8", 0, SCALE_DRAWBAR},
-    {"lower_4", "lower.drawbar4", 8, SCALE_DRAWBAR},
-    {"lower_2_23", "lower.drawbar223", 8, SCALE_DRAWBAR},
-    {"lower_2", "lower.drawbar2", 8, SCALE_DRAWBAR},
-    {"lower_1_35", "lower.drawbar135", 8, SCALE_DRAWBAR},
-    {"lower_1_13", "lower.drawbar113", 8, SCALE_DRAWBAR},
-    {"lower_1", "lower.drawbar1", 8, SCALE_DRAWBAR},
+    {"lower_16", "lower.drawbar16", 8, SCALE_DRAWBAR},
+    {"lower_5_13", "lower.drawbar513", 8, SCALE_DRAWBAR},
+    {"lower_8", "lower.drawbar8", 8, SCALE_DRAWBAR},
+    {"lower_4", "lower.drawbar4", 0, SCALE_DRAWBAR},
+    {"lower_2_23", "lower.drawbar223", 0, SCALE_DRAWBAR},
+    {"lower_2", "lower.drawbar2", 0, SCALE_DRAWBAR},
+    {"lower_1_35", "lower.drawbar135", 0, SCALE_DRAWBAR},
+    {"lower_1_13", "lower.drawbar113", 0, SCALE_DRAWBAR},
+    {"lower_1", "lower.drawbar1", 0, SCALE_DRAWBAR},
 
-    {"pedal_16", "pedal.drawbar16", 0, SCALE_DRAWBAR},
-    {"pedal_5_13", "pedal.drawbar513", 0, SCALE_DRAWBAR},
-    {"pedal_8", "pedal.drawbar8", 2, SCALE_DRAWBAR},
+    {"pedal_16", "pedal.drawbar16", 8, SCALE_DRAWBAR},
+    {"pedal_5_13", "pedal.drawbar513", 8, SCALE_DRAWBAR},
+    {"pedal_8", "pedal.drawbar8", 8, SCALE_DRAWBAR},
     {"pedal_4", "pedal.drawbar4", 0, SCALE_DRAWBAR},
     {"pedal_2_23", "pedal.drawbar223", 0, SCALE_DRAWBAR},
     {"pedal_2", "pedal.drawbar2", 0, SCALE_DRAWBAR},
@@ -81,9 +81,9 @@ static const param_def_t defs[PARAM_COUNT] = {
     {"swell", "swellpedal1", 100, SCALE_PERCENT},
     {"rotary", "rotary.speed-preset", 1, SCALE_ROTARY},
     {"overdrive", "overdrive.enable", 0, SCALE_TOGGLE},
-    {"drive_character", "overdrive.character", 80, SCALE_PERCENT},
-    {"drive_input", "overdrive.inputgain", 35, SCALE_PERCENT},
-    {"drive_output", "overdrive.outputgain", 20, SCALE_PERCENT},
+    {"drive_character", "overdrive.character", 47, SCALE_PERCENT},
+    {"drive_input", "overdrive.inputgain", 16, SCALE_PERCENT},
+    {"drive_output", "overdrive.outputgain", 47, SCALE_PERCENT},
     {"reverb", "reverb.mix", 10, SCALE_PERCENT},
 };
 
@@ -254,7 +254,7 @@ static int organ_get_param(void *instance, const char *key, char *buf, int n) {
         raw_key[raw_len] = 0;
         int display_param = find_param(raw_key);
         if (display_param < 0 || defs[display_param].scale != SCALE_DRAWBAR) return 0;
-        return snprintf(buf, (size_t)n, "%d", o->value[display_param]);
+        return snprintf(buf, (size_t)n, "%d", 8 - o->value[display_param]);
     }
     int i = find_param(key);
     if (i < 0) return 0;
