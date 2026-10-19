@@ -41,4 +41,7 @@ python3 /path/to/mpc-vst-plugins-release/tools/catalog_check.py \
 ```
 
 The expected result is `OK: setbfree-organ 0.1.12 (0 warnings)`. The highest
-required GLIBC symbol in the released binary is 2.29.
+required GLIBC symbol in the released binary is 2.29. The release toolkit must
+come from a Linux checkout, or `tools/release/plugin_list.awk` must be normalized
+to LF before packaging. The Force BusyBox `awk` rejects a CRLF copy even though
+the catalog checker otherwise accepts the archive.

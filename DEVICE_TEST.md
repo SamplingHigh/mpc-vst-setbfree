@@ -24,6 +24,19 @@ play all three split modes, exercise the skin/Q-Links, and save/reload a project
 - The screenshot in `docs/images/setbfree-organ-force.png` records the running
   plugin on the tested Force.
 
-Release 0.1.12 keeps the tested DSP, parameters and skin, and changes the ARM
-toolchain and installer layout for catalog compatibility. It needs one device
-smoke test before its `tested.json` record can be promoted from 0.1.11.
+## 2026-10-19 — release 0.1.12 portable package
+
+- Installed the final portable package on the same Force running MPC OS 3.9.1.2.
+- The installer migrated the legacy `/sdcard/vst/setbfree.so` installation and
+  registered exactly one portable plugin-list entry.
+- Installed binary MD5: `7667000d4a7f1ba8c8525445567b5850`.
+- Confirmed manifest version 0.1.12, active MPC service and a running MPC process.
+- Instantiated setBfree Organ through MPC Remote. The upper drawbars opened at
+  `888000000`, and the overdrive controls opened at `47 / 16 / 47`.
+- Confirmed from `/proc/<MPC pid>/maps` that MPC loaded
+  `/sdcard/Synths/Force Runtime - VST - setBfree Organ/setbfree.so`.
+
+The first installation attempt exposed a CRLF copy of `plugin_list.awk` that the
+device BusyBox `awk` rejected. The final release package contains the same file
+with LF line endings; the installer then completed, removed the legacy binary,
+and restarted MPC successfully.
