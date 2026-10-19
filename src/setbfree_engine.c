@@ -242,6 +242,20 @@ static int organ_get_param(void *instance, const char *key, char *buf, int n) {
         }
         return used;
     }
+    static const char display_suffix[] = "_display";
+    size_t key_len = strlen(key);
+    size_t suffix_len = sizeof(display_suffix) - 1;
+    if (key_len > suffix_len &&
+        !strcmp(key + key_len - suffix_len, display_suffix)) {
+        char raw_key[64];
+        size_t raw_len = key_len - suffix_len;
+        if (raw_len >= sizeof(raw_key)) return 0;
+        memcpy(raw_key, key, raw_len);
+        raw_key[raw_len] = 0;
+        int display_param = find_param(raw_key);
+        if (display_param < 0 || defs[display_param].scale != SCALE_DRAWBAR) return 0;
+        return snprintf(buf, (size_t)n, "%d", o->value[display_param]);
+    }
     int i = find_param(key);
     if (i < 0) return 0;
     return snprintf(buf, (size_t)n, "%d", o->value[i]);
