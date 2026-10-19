@@ -6,7 +6,7 @@ Force. It runs in MPC's plugin host and has a native touchscreen skin.
 
 ![setBfree Organ running on Akai Force](docs/images/setbfree-organ-force.png)
 
-The current release is **0.1.11**. It provides:
+The current release is **0.1.12**. It provides:
 
 - upper, lower and pedal drawbars with traditional colour groups;
 - touchscreen, Data Wheel and Q-Link control;
@@ -21,7 +21,7 @@ the engine are upper/lower C2-C7 (36-96) and pedal C1-C3 (24-49).
 
 ## Install
 
-Download `setBfree-Organ-0.1.11-mpc-armv7.zip` from the GitHub release and
+Download `setBfree-Organ-0.1.12-mpc-armv7.zip` from the GitHub release and
 follow the included `INSTALL.md`. Installation requires root SSH access to a
 first-generation MPC OS device and restarts the MPC application.
 
@@ -35,7 +35,7 @@ both repositories, check out the tested porting-kit revision, then point
 ```sh
 git clone https://github.com/SamplingHigh/mpc-vst-plugins.git
 git -C mpc-vst-plugins checkout 66eca176028b5fd63622dd7769451d5e28eb11a1
-git clone https://github.com/sd88me/mpc-vst-setbfree.git
+git clone https://github.com/SamplingHigh/mpc-vst-setbfree.git
 cd mpc-vst-setbfree
 MPC_VST=../mpc-vst-plugins ./test.sh
 MPC_VST=../mpc-vst-plugins ./build.sh
@@ -45,6 +45,15 @@ MPC_VST=../mpc-vst-plugins ./build.sh
 `arm-linux-gnueabihf-gcc` toolchain is installed, use `build-cross.sh` instead.
 HTML skin artwork also needs Python, Pillow and Playwright Chromium; set
 `HTML_ART_PY` when that Python interpreter is outside the default path.
+
+For a catalog-compatible build without Docker, install Zig and run:
+
+```sh
+ZIG=/path/to/zig ./build-zig.sh
+```
+
+This targets ARM hard-float with glibc 2.31 compatibility. The 0.1.12 release
+binary has a highest required GLIBC symbol of 2.29.
 
 ## Source and licence
 
