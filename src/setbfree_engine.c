@@ -81,9 +81,9 @@ static const param_def_t defs[PARAM_COUNT] = {
     {"swell", "swellpedal1", 100, SCALE_PERCENT},
     {"rotary", "rotary.speed-preset", 1, SCALE_ROTARY},
     {"overdrive", "overdrive.enable", 0, SCALE_TOGGLE},
-    {"drive_character", "overdrive.character", 50, SCALE_PERCENT},
-    {"drive_input", "overdrive.inputgain", 50, SCALE_PERCENT},
-    {"drive_output", "overdrive.outputgain", 50, SCALE_PERCENT},
+    {"drive_character", "overdrive.character", 80, SCALE_PERCENT},
+    {"drive_input", "overdrive.inputgain", 35, SCALE_PERCENT},
+    {"drive_output", "overdrive.outputgain", 20, SCALE_PERCENT},
     {"reverb", "reverb.mix", 10, SCALE_PERCENT},
 };
 

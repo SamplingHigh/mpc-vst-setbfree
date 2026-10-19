@@ -343,7 +343,7 @@
       "name": "Drive Character",
       "min": 0,
       "max": 100,
-      "default": 50,
+      "default": 80,
       "display": "int",
       "unit": "%"
     },
@@ -352,7 +352,7 @@
       "name": "Drive Input",
       "min": 0,
       "max": 100,
-      "default": 50,
+      "default": 35,
       "display": "int",
       "unit": "%"
     },
@@ -361,7 +361,7 @@
       "name": "Drive Output",
       "min": 0,
       "max": 100,
-      "default": 50,
+      "default": 20,
       "display": "int",
       "unit": "%"
     },
