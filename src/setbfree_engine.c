@@ -41,35 +41,35 @@ static const param_def_t defs[PARAM_COUNT] = {
     {"pedal_split", NULL, 36, SCALE_RAW},
     {"upper_split", NULL, 60, SCALE_RAW},
 
-    {"upper_16", "upper.drawbar16", 8, SCALE_DRAWBAR},
-    {"upper_5_13", "upper.drawbar513", 8, SCALE_DRAWBAR},
-    {"upper_8", "upper.drawbar8", 8, SCALE_DRAWBAR},
-    {"upper_4", "upper.drawbar4", 0, SCALE_DRAWBAR},
-    {"upper_2_23", "upper.drawbar223", 0, SCALE_DRAWBAR},
-    {"upper_2", "upper.drawbar2", 0, SCALE_DRAWBAR},
-    {"upper_1_35", "upper.drawbar135", 0, SCALE_DRAWBAR},
-    {"upper_1_13", "upper.drawbar113", 0, SCALE_DRAWBAR},
-    {"upper_1", "upper.drawbar1", 0, SCALE_DRAWBAR},
+    {"upper_16", "upper.drawbar16", 0, SCALE_DRAWBAR},
+    {"upper_5_13", "upper.drawbar513", 0, SCALE_DRAWBAR},
+    {"upper_8", "upper.drawbar8", 0, SCALE_DRAWBAR},
+    {"upper_4", "upper.drawbar4", 8, SCALE_DRAWBAR},
+    {"upper_2_23", "upper.drawbar223", 8, SCALE_DRAWBAR},
+    {"upper_2", "upper.drawbar2", 8, SCALE_DRAWBAR},
+    {"upper_1_35", "upper.drawbar135", 8, SCALE_DRAWBAR},
+    {"upper_1_13", "upper.drawbar113", 8, SCALE_DRAWBAR},
+    {"upper_1", "upper.drawbar1", 8, SCALE_DRAWBAR},
 
-    {"lower_16", "lower.drawbar16", 8, SCALE_DRAWBAR},
-    {"lower_5_13", "lower.drawbar513", 8, SCALE_DRAWBAR},
-    {"lower_8", "lower.drawbar8", 8, SCALE_DRAWBAR},
-    {"lower_4", "lower.drawbar4", 0, SCALE_DRAWBAR},
-    {"lower_2_23", "lower.drawbar223", 0, SCALE_DRAWBAR},
-    {"lower_2", "lower.drawbar2", 0, SCALE_DRAWBAR},
-    {"lower_1_35", "lower.drawbar135", 0, SCALE_DRAWBAR},
-    {"lower_1_13", "lower.drawbar113", 0, SCALE_DRAWBAR},
-    {"lower_1", "lower.drawbar1", 0, SCALE_DRAWBAR},
+    {"lower_16", "lower.drawbar16", 0, SCALE_DRAWBAR},
+    {"lower_5_13", "lower.drawbar513", 0, SCALE_DRAWBAR},
+    {"lower_8", "lower.drawbar8", 0, SCALE_DRAWBAR},
+    {"lower_4", "lower.drawbar4", 8, SCALE_DRAWBAR},
+    {"lower_2_23", "lower.drawbar223", 8, SCALE_DRAWBAR},
+    {"lower_2", "lower.drawbar2", 8, SCALE_DRAWBAR},
+    {"lower_1_35", "lower.drawbar135", 8, SCALE_DRAWBAR},
+    {"lower_1_13", "lower.drawbar113", 8, SCALE_DRAWBAR},
+    {"lower_1", "lower.drawbar1", 8, SCALE_DRAWBAR},
 
-    {"pedal_16", "pedal.drawbar16", 8, SCALE_DRAWBAR},
-    {"pedal_5_13", "pedal.drawbar513", 8, SCALE_DRAWBAR},
-    {"pedal_8", "pedal.drawbar8", 8, SCALE_DRAWBAR},
-    {"pedal_4", "pedal.drawbar4", 0, SCALE_DRAWBAR},
-    {"pedal_2_23", "pedal.drawbar223", 0, SCALE_DRAWBAR},
-    {"pedal_2", "pedal.drawbar2", 0, SCALE_DRAWBAR},
-    {"pedal_1_35", "pedal.drawbar135", 0, SCALE_DRAWBAR},
-    {"pedal_1_13", "pedal.drawbar113", 0, SCALE_DRAWBAR},
-    {"pedal_1", "pedal.drawbar1", 0, SCALE_DRAWBAR},
+    {"pedal_16", "pedal.drawbar16", 0, SCALE_DRAWBAR},
+    {"pedal_5_13", "pedal.drawbar513", 0, SCALE_DRAWBAR},
+    {"pedal_8", "pedal.drawbar8", 0, SCALE_DRAWBAR},
+    {"pedal_4", "pedal.drawbar4", 8, SCALE_DRAWBAR},
+    {"pedal_2_23", "pedal.drawbar223", 8, SCALE_DRAWBAR},
+    {"pedal_2", "pedal.drawbar2", 8, SCALE_DRAWBAR},
+    {"pedal_1_35", "pedal.drawbar135", 8, SCALE_DRAWBAR},
+    {"pedal_1_13", "pedal.drawbar113", 8, SCALE_DRAWBAR},
+    {"pedal_1", "pedal.drawbar1", 8, SCALE_DRAWBAR},
 
     {"percussion", "percussion.enable", 0, SCALE_TOGGLE},
     {"perc_volume", "percussion.volume", 1, SCALE_TOGGLE},
@@ -107,7 +107,7 @@ static int find_param(const char *key) {
 
 static unsigned char engine_value(const param_def_t *p, int v) {
     switch (p->scale) {
-    case SCALE_DRAWBAR: return (unsigned char)((clampi(v, 0, 8) * 127 + 4) / 8);
+    case SCALE_DRAWBAR: return (unsigned char)(((8 - clampi(v, 0, 8)) * 127 + 4) / 8);
     case SCALE_PERCENT: return (unsigned char)((clampi(v, 0, 100) * 127 + 50) / 100);
     case SCALE_TOGGLE: return v ? 127 : 0;
     case SCALE_VIBRATO: return (unsigned char)((clampi(v, 0, 6) * 127 + 3) / 6);
