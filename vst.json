@@ -2,7 +2,7 @@
   "name": "setBfree Organ",
   "vendor": "Force Runtime",
   "uid": "SbF1",
-  "version": 1014,
+  "version": 2000,
   "so": "setbfree.so",
   "params": "params.json",
   "layout": "layout.conf",
@@ -28,8 +28,6 @@
     "cflags": [
       "-DLV2SYNTH",
       "-DHAVE_MEMSTREAM",
-      "-I/mv/wrapper",
-      "-I../../working/research/mpc-vst-plugins/wrapper",
       "-Isrc/dsp/src",
       "-Isrc/dsp/b_overdrive",
       "-Isrc/dsp/b_reverb",

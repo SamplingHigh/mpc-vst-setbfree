@@ -68,6 +68,10 @@ extern void vibratoProc (struct b_vibrato* v, float const* inbuffer, float* outb
 /* for standalone use */
 extern void reset_vibrato (struct b_vibrato* v);
 extern void init_vibrato (struct b_vibrato* v);
+extern void setScannerFrequency (struct b_vibrato* v, double Hertz);
+extern void setScannerV1Depth (struct b_vibrato* v, double depth);
+extern void setScannerV2Depth (struct b_vibrato* v, double depth);
+extern void setScannerV3Depth (struct b_vibrato* v, double depth);
 
 /* tonegen integration */
 extern void resetVibrato (void* tonegen);

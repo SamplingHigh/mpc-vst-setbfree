@@ -564,6 +564,8 @@ extern void setEnvAttackModel (struct b_tonegen* t, int model);
 extern void setEnvReleaseModel (struct b_tonegen* t, int model);
 extern void setEnvAttackClickLevel (struct b_tonegen* t, double u);
 extern void setEnvReleaseClickLevel (struct b_tonegen* t, double u);
+extern void setEnvAtkClkMinLength (struct b_tonegen* t, double u);
+extern void setEnvAtkClkMaxLength (struct b_tonegen* t, double u);
 extern void setKeyClick (struct b_tonegen* t, int v);
 extern int oscConfig (struct b_tonegen* t, ConfigContext* cfg);
 extern const ConfigDoc* oscDoc ();

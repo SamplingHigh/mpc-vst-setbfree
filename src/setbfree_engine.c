@@ -19,7 +19,7 @@
 #include "state.h"
 
 #define BLOCK 128
-#define PARAM_COUNT 55
+#define PARAM_COUNT 71
 
 double SampleRateD = 44100.0;
 
@@ -31,7 +31,9 @@ int mainConfig(ConfigContext *cfg) { (void)cfg; return 0; }
 typedef enum { SCALE_RAW, SCALE_DRAWBAR, SCALE_PERCENT, SCALE_TOGGLE,
                SCALE_VIBRATO, SCALE_ROTARY, SCALE_SECONDS, SCALE_UNIT,
                SCALE_SOFT_LEVEL, SCALE_PERC_GAIN, SCALE_MANUAL_VIBRATO,
-               SCALE_CROSSTALK } scale_t;
+               SCALE_CROSSTALK, SCALE_HORN_SLOW_RPM, SCALE_HORN_FAST_RPM,
+               SCALE_DRUM_SLOW_RPM, SCALE_DRUM_FAST_RPM, SCALE_HORN_TIME,
+               SCALE_DRUM_TIME, SCALE_SCANNER_RATE, SCALE_SCANNER_DEPTH } scale_t;
 
 typedef struct {
     const char *key;
@@ -101,6 +103,23 @@ static const param_def_t defs[PARAM_COUNT] = {
     {"transformer_crosstalk", NULL, 0.0, SCALE_CROSSTALK},
     {"terminal_crosstalk", NULL, 0.01, SCALE_CROSSTALK},
     {"wiring_crosstalk", NULL, 0.01, SCALE_CROSSTALK},
+
+    {"horn_slow_speed", NULL, 40.32, SCALE_HORN_SLOW_RPM},
+    {"horn_fast_speed", NULL, 423.36, SCALE_HORN_FAST_RPM},
+    {"drum_slow_speed", NULL, 36.0, SCALE_DRUM_SLOW_RPM},
+    {"drum_fast_speed", NULL, 357.3, SCALE_DRUM_FAST_RPM},
+    {"horn_acceleration", NULL, 0.161, SCALE_HORN_TIME},
+    {"horn_deceleration", NULL, 0.321, SCALE_HORN_TIME},
+    {"drum_acceleration", NULL, 4.127, SCALE_DRUM_TIME},
+    {"drum_deceleration", NULL, 1.371, SCALE_DRUM_TIME},
+    {"attack_click_level", NULL, 0.5, SCALE_UNIT},
+    {"release_click_level", NULL, 0.25, SCALE_UNIT},
+    {"click_min_length", NULL, 0.125, SCALE_UNIT},
+    {"click_max_length", NULL, 0.625, SCALE_UNIT},
+    {"scanner_rate", NULL, 7.25, SCALE_SCANNER_RATE},
+    {"scanner_v1_depth", NULL, 3.0, SCALE_SCANNER_DEPTH},
+    {"scanner_v2_depth", NULL, 6.0, SCALE_SCANNER_DEPTH},
+    {"scanner_v3_depth", NULL, 9.0, SCALE_SCANNER_DEPTH},
 };
 
 enum {
@@ -110,7 +129,13 @@ enum {
     P_PERC_FAST_TIME = 44, P_PERC_SLOW_TIME, P_PERC_NORMAL_LEVEL,
     P_PERC_SOFT_LEVEL, P_PERC_GAIN, P_VIBRATO_UPPER_MODE,
     P_VIBRATO_LOWER_MODE, P_COMPARTMENT_CROSSTALK,
-    P_TRANSFORMER_CROSSTALK, P_TERMINAL_CROSSTALK, P_WIRING_CROSSTALK
+    P_TRANSFORMER_CROSSTALK, P_TERMINAL_CROSSTALK, P_WIRING_CROSSTALK,
+    P_HORN_SLOW_SPEED, P_HORN_FAST_SPEED, P_DRUM_SLOW_SPEED,
+    P_DRUM_FAST_SPEED, P_HORN_ACCELERATION, P_HORN_DECELERATION,
+    P_DRUM_ACCELERATION, P_DRUM_DECELERATION, P_ATTACK_CLICK_LEVEL,
+    P_RELEASE_CLICK_LEVEL, P_CLICK_MIN_LENGTH, P_CLICK_MAX_LENGTH,
+    P_SCANNER_RATE, P_SCANNER_V1_DEPTH, P_SCANNER_V2_DEPTH,
+    P_SCANNER_V3_DEPTH
 };
 
 typedef struct {
@@ -119,7 +144,7 @@ typedef struct {
     float horn[BLOCK], drum[BLOCK];
     double value[PARAM_COUNT];
     int rebuild_delay;
-    uint64_t changed;
+    uint64_t changed[2];
 } organ_t;
 
 static int clampi(int v, int lo, int hi) {
@@ -171,7 +196,8 @@ static int manual_vibrato_from_old(int v) {
 }
 
 static void mark_changed(organ_t *o, int i) {
-    if (i >= 0 && i < 64) o->changed |= UINT64_C(1) << i;
+    if (i >= 0 && i < PARAM_COUNT)
+        o->changed[i / 64] |= UINT64_C(1) << (i % 64);
 }
 
 static void apply_manual_vibrato(organ_t *o, int i) {
@@ -233,6 +259,68 @@ static void apply_param(organ_t *o, int i) {
          * audio blocks after the last move so a touchscreen drag causes one
          * rebuild, rather than allocating a complete organ on every pixel. */
         o->rebuild_delay = 8;
+        return;
+    case P_HORN_SLOW_SPEED:
+        o->core.whirl->hornRPMslow = (float)o->value[i];
+        computeRotationSpeeds(o->core.whirl);
+        return;
+    case P_HORN_FAST_SPEED:
+        o->core.whirl->hornRPMfast = (float)o->value[i];
+        computeRotationSpeeds(o->core.whirl);
+        return;
+    case P_DRUM_SLOW_SPEED:
+        o->core.whirl->drumRPMslow = (float)o->value[i];
+        computeRotationSpeeds(o->core.whirl);
+        return;
+    case P_DRUM_FAST_SPEED:
+        o->core.whirl->drumRPMfast = (float)o->value[i];
+        computeRotationSpeeds(o->core.whirl);
+        return;
+    case P_HORN_ACCELERATION:
+        o->core.whirl->hornAcc = (float)o->value[i];
+        return;
+    case P_HORN_DECELERATION:
+        o->core.whirl->hornDec = (float)o->value[i];
+        return;
+    case P_DRUM_ACCELERATION:
+        o->core.whirl->drumAcc = (float)o->value[i];
+        return;
+    case P_DRUM_DECELERATION:
+        o->core.whirl->drumDec = (float)o->value[i];
+        return;
+    case P_ATTACK_CLICK_LEVEL:
+        setEnvAttackClickLevel(o->core.synth, o->value[i]);
+        return;
+    case P_RELEASE_CLICK_LEVEL:
+        setEnvReleaseClickLevel(o->core.synth, o->value[i]);
+        return;
+    case P_CLICK_MIN_LENGTH:
+        setEnvAtkClkMinLength(o->core.synth,
+            fmin(o->value[P_CLICK_MIN_LENGTH],
+                 fmax(0.0, o->value[P_CLICK_MAX_LENGTH] - 0.025)));
+        setEnvAtkClkMaxLength(o->core.synth,
+            fmax(o->value[P_CLICK_MAX_LENGTH],
+                 fmin(1.0, o->value[P_CLICK_MIN_LENGTH] + 0.025)));
+        return;
+    case P_CLICK_MAX_LENGTH:
+        setEnvAtkClkMinLength(o->core.synth,
+            fmin(o->value[P_CLICK_MIN_LENGTH],
+                 fmax(0.0, o->value[P_CLICK_MAX_LENGTH] - 0.025)));
+        setEnvAtkClkMaxLength(o->core.synth,
+            fmax(o->value[P_CLICK_MAX_LENGTH],
+                 fmin(1.0, o->value[P_CLICK_MIN_LENGTH] + 0.025)));
+        return;
+    case P_SCANNER_RATE:
+        setScannerFrequency(&o->core.synth->inst_vibrato, o->value[i]);
+        return;
+    case P_SCANNER_V1_DEPTH:
+        setScannerV1Depth(&o->core.synth->inst_vibrato, o->value[i]);
+        return;
+    case P_SCANNER_V2_DEPTH:
+        setScannerV2Depth(&o->core.synth->inst_vibrato, o->value[i]);
+        return;
+    case P_SCANNER_V3_DEPTH:
+        setScannerV3Depth(&o->core.synth->inst_vibrato, o->value[i]);
         return;
     default:
         break;
@@ -347,6 +435,14 @@ static void set_one(organ_t *o, const char *key, const char *text) {
     else if (defs[i].scale == SCALE_SOFT_LEVEL) v = clampd(v, 0.0, 0.89125);
     else if (defs[i].scale == SCALE_PERC_GAIN) v = clampd(v, 0.0, 22.0);
     else if (defs[i].scale == SCALE_MANUAL_VIBRATO) v = clampi((int)lround(v), 0, 6);
+    else if (defs[i].scale == SCALE_HORN_SLOW_RPM) v = clampd(v, 5.0, 200.0);
+    else if (defs[i].scale == SCALE_HORN_FAST_RPM) v = clampd(v, 100.0, 900.0);
+    else if (defs[i].scale == SCALE_DRUM_SLOW_RPM) v = clampd(v, 5.0, 100.0);
+    else if (defs[i].scale == SCALE_DRUM_FAST_RPM) v = clampd(v, 60.0, 600.0);
+    else if (defs[i].scale == SCALE_HORN_TIME) v = clampd(v, 0.05, 2.0);
+    else if (defs[i].scale == SCALE_DRUM_TIME) v = clampd(v, 0.5, 10.0);
+    else if (defs[i].scale == SCALE_SCANNER_RATE) v = clampd(v, 4.0, 22.0);
+    else if (defs[i].scale == SCALE_SCANNER_DEPTH) v = clampd(v, 0.0, 12.0);
     o->value[i] = v;
     apply_param(o, i);
     /* The published 0.1.12 project state contains the three original
@@ -416,24 +512,45 @@ static int organ_get_param(void *instance, const char *key, char *buf, int n) {
             return snprintf(buf, (size_t)n, "%d", 8 - (int)lround(o->value[display_param]));
         if (defs[display_param].scale == SCALE_CROSSTALK)
             return snprintf(buf, (size_t)n, "%.3f", o->value[display_param]);
+        if (defs[display_param].scale == SCALE_SECONDS ||
+            defs[display_param].scale == SCALE_UNIT ||
+            defs[display_param].scale == SCALE_SOFT_LEVEL ||
+            defs[display_param].scale == SCALE_PERC_GAIN ||
+            defs[display_param].scale == SCALE_HORN_SLOW_RPM ||
+            defs[display_param].scale == SCALE_HORN_FAST_RPM ||
+            defs[display_param].scale == SCALE_DRUM_SLOW_RPM ||
+            defs[display_param].scale == SCALE_DRUM_FAST_RPM ||
+            defs[display_param].scale == SCALE_HORN_TIME ||
+            defs[display_param].scale == SCALE_DRUM_TIME ||
+            defs[display_param].scale == SCALE_SCANNER_RATE ||
+            defs[display_param].scale == SCALE_SCANNER_DEPTH)
+            return snprintf(buf, (size_t)n, "%.5g", o->value[display_param]);
         return 0;
     }
     int i = find_param(key);
     if (i < 0) return 0;
     if (defs[i].scale == SCALE_SECONDS || defs[i].scale == SCALE_UNIT ||
         defs[i].scale == SCALE_SOFT_LEVEL || defs[i].scale == SCALE_PERC_GAIN ||
-        defs[i].scale == SCALE_CROSSTALK)
+        defs[i].scale == SCALE_CROSSTALK ||
+        defs[i].scale == SCALE_HORN_SLOW_RPM ||
+        defs[i].scale == SCALE_HORN_FAST_RPM ||
+        defs[i].scale == SCALE_DRUM_SLOW_RPM ||
+        defs[i].scale == SCALE_DRUM_FAST_RPM ||
+        defs[i].scale == SCALE_HORN_TIME || defs[i].scale == SCALE_DRUM_TIME ||
+        defs[i].scale == SCALE_SCANNER_RATE ||
+        defs[i].scale == SCALE_SCANNER_DEPTH)
         return snprintf(buf, (size_t)n, "%.5g", o->value[i]);
     return snprintf(buf, (size_t)n, "%d", (int)lround(o->value[i]));
 }
 
 int mpc_engine_changed(void *instance, char *key, int len) {
     organ_t *o = (organ_t *)instance;
-    if (!o || !key || len <= 0 || !o->changed) return 0;
+    if (!o || !key || len <= 0 || (!o->changed[0] && !o->changed[1])) return 0;
     int i = 0;
-    while (i < PARAM_COUNT && !(o->changed & (UINT64_C(1) << i))) ++i;
-    if (i >= PARAM_COUNT) { o->changed = 0; return 0; }
-    o->changed &= ~(UINT64_C(1) << i);
+    while (i < PARAM_COUNT &&
+           !(o->changed[i / 64] & (UINT64_C(1) << (i % 64)))) ++i;
+    if (i >= PARAM_COUNT) { o->changed[0] = o->changed[1] = 0; return 0; }
+    o->changed[i / 64] &= ~(UINT64_C(1) << (i % 64));
     return snprintf(key, (size_t)len, "%s", defs[i].key);
 }
 
@@ -468,7 +585,8 @@ static void organ_render(void *instance, int16_t *out, int frames) {
 
 static const mpc_engine_t engine = {
     organ_create, organ_destroy, organ_midi,
-    organ_set_param, organ_get_param, organ_render
+    organ_set_param, organ_get_param, organ_render,
+    NULL, NULL
 };
 
 const mpc_engine_t *mpc_engine(void) { return &engine; }

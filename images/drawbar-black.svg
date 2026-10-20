@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="32" viewBox="0 0 64 32">
+  <title>drawbar-black.svg</title>
+  <g id="Layer_1" data-name="Layer 1">
+    <path d="M4 1 L60 1 C61.657 1 63 2.343 63 4 L63 28 C63 29.657 61.657 31 60 31 L4 31 C2.343 31 1 29.657 1 28 L1 4 C1 2.343 2.343 1 4 1 Z" fill="#000000" stroke="#534d43" stroke-width="2"/>
+    <path d="M3 8 L61 8 M3 16 L61 16 M3 24 L61 24" fill="#000000" stroke="#1a1a1a" stroke-width="2" opacity="0.85"/>
+  </g>
+</svg>

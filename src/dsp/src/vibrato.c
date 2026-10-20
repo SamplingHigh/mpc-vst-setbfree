@@ -75,7 +75,7 @@
  * or 1500 rpm (50 Hz models). The usual frequency is somewhere between
  * 7 or 8 Hz.
  */
-static void
+void
 setScannerFrequency (struct b_vibrato* v, double Hertz)
 {
 	v->vibFqHertz = Hertz;
@@ -252,6 +252,53 @@ initIncrementTables (struct b_vibrato* v)
 		}
 	}
 #endif /* DEBUG */
+}
+
+static void
+setScannerDepth (struct b_vibrato* v, int scanner, double depth)
+{
+	unsigned int* table;
+	int           i;
+	double        S = 65536.0;
+
+	if (depth < 0.0)
+		depth = 0.0;
+	else if (depth > 12.0)
+		depth = 12.0;
+
+	if (scanner == 1) {
+		v->vib1OffAmp = depth;
+		table         = v->offset1Table;
+	} else if (scanner == 2) {
+		v->vib2OffAmp = depth;
+		table         = v->offset2Table;
+	} else {
+		v->vib3OffAmp = depth;
+		table         = v->offset3Table;
+	}
+
+	for (i = 0; i < INCTBL_SIZE; ++i) {
+		double m = sin ((2.0 * M_PI * i) / INCTBL_SIZE);
+		table[i] = (unsigned int)((1.0 + depth + (m * depth)) * S);
+	}
+}
+
+void
+setScannerV1Depth (struct b_vibrato* v, double depth)
+{
+	setScannerDepth (v, 1, depth);
+}
+
+void
+setScannerV2Depth (struct b_vibrato* v, double depth)
+{
+	setScannerDepth (v, 2, depth);
+}
+
+void
+setScannerV3Depth (struct b_vibrato* v, double depth)
+{
+	setScannerDepth (v, 3, depth);
 }
 
 /*

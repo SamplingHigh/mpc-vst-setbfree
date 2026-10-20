@@ -6,13 +6,24 @@ Force. It runs in MPC's plugin host and has a native touchscreen skin.
 
 ![setBfree Organ running on Akai Force](docs/images/setbfree-organ-force.png)
 
-The current release is **0.1.12**. It provides:
+The current release is **0.2.0**. It provides:
 
-- upper, lower and pedal drawbars with traditional colour groups;
+- upper and lower drawbars with traditional colour groups, plus the authentic
+  16' and 8' pedal controls;
 - touchscreen, Data Wheel and Q-Link control;
-- percussion, vibrato/chorus, swell, overdrive, reverb and rotary speed;
+- percussion, vibrato/chorus, scanner, swell, overdrive and reverb controls;
+- editable Leslie motor speeds and acceleration, key-click levels and organ
+  leakage parameters;
 - one-keyboard operation with optional upper/lower or upper/lower/pedal splits;
 - VST chunk state for project save and reload.
+
+## Screens
+
+![Lower and pedal drawbars](docs/images/setbfree-organ-force-lower-pedal.png)
+
+![Percussion, vibrato and scanner controls](docs/images/setbfree-organ-force-organ.png)
+
+![Leslie, key-click and leakage settings](docs/images/setbfree-organ-force-settings.png)
 
 Every incoming channel-voice message is routed to setBfree's upper-manual MIDI
 channel. With split mode disabled, the whole keyboard drives the upper manual.
@@ -21,7 +32,7 @@ the engine are upper/lower C2-C7 (36-96) and pedal C1-C3 (24-49).
 
 ## Install
 
-Download `setBfree-Organ-0.1.12-mpc-armv7.zip` from the GitHub release and
+Download `setBfree-Organ-0.2.0-mpc-armv7.zip` from the GitHub release and
 follow the included `INSTALL.md`. Installation requires root SSH access to a
 first-generation MPC OS device and restarts the MPC application.
 
@@ -34,7 +45,7 @@ both repositories, check out the tested porting-kit revision, then point
 
 ```sh
 git clone https://github.com/SamplingHigh/mpc-vst-plugins.git
-git -C mpc-vst-plugins checkout 66eca176028b5fd63622dd7769451d5e28eb11a1
+git -C mpc-vst-plugins checkout 7f3c789494b75b8e165421809c83319cd3da6584
 git clone https://github.com/SamplingHigh/mpc-vst-setbfree.git
 cd mpc-vst-setbfree
 MPC_VST=../mpc-vst-plugins ./test.sh
@@ -52,7 +63,13 @@ For a catalog-compatible build without Docker, install Zig and run:
 ZIG=/path/to/zig ./build-zig.sh
 ```
 
-This targets ARM hard-float with glibc 2.31 compatibility. The 0.1.12 release
+For layout and artwork changes, `build-skin.sh` regenerates only the skin. On
+Windows, `Update-SkinOnForce.bat` builds that skin, uploads only `Plugin Skins`
+and restarts the MPC application without replacing the plugin binary. Set
+`FORCE_HOST`, pass `-ForceHost` to the PowerShell script, or put the device
+address in a local `.force-host` file.
+
+This targets ARM hard-float with glibc 2.31 compatibility. The 0.2.0 release
 binary has a highest required GLIBC symbol of 2.29.
 
 ## Source and licence

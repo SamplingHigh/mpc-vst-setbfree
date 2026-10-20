@@ -30,6 +30,7 @@
     {
       "key": "upper_16",
       "display_key": "upper_16_display",
+      "dynamic_display": true,
       "name": "Upper 16'",
       "min": 0,
       "max": 8,
@@ -39,6 +40,7 @@
     {
       "key": "upper_5_13",
       "display_key": "upper_5_13_display",
+      "dynamic_display": true,
       "name": "Upper 5 1/3'",
       "min": 0,
       "max": 8,
@@ -48,6 +50,7 @@
     {
       "key": "upper_8",
       "display_key": "upper_8_display",
+      "dynamic_display": true,
       "name": "Upper 8'",
       "min": 0,
       "max": 8,
@@ -57,6 +60,7 @@
     {
       "key": "upper_4",
       "display_key": "upper_4_display",
+      "dynamic_display": true,
       "name": "Upper 4'",
       "min": 0,
       "max": 8,
@@ -66,6 +70,7 @@
     {
       "key": "upper_2_23",
       "display_key": "upper_2_23_display",
+      "dynamic_display": true,
       "name": "Upper 2 2/3'",
       "min": 0,
       "max": 8,
@@ -75,6 +80,7 @@
     {
       "key": "upper_2",
       "display_key": "upper_2_display",
+      "dynamic_display": true,
       "name": "Upper 2'",
       "min": 0,
       "max": 8,
@@ -84,6 +90,7 @@
     {
       "key": "upper_1_35",
       "display_key": "upper_1_35_display",
+      "dynamic_display": true,
       "name": "Upper 1 3/5'",
       "min": 0,
       "max": 8,
@@ -93,6 +100,7 @@
     {
       "key": "upper_1_13",
       "display_key": "upper_1_13_display",
+      "dynamic_display": true,
       "name": "Upper 1 1/3'",
       "min": 0,
       "max": 8,
@@ -102,6 +110,7 @@
     {
       "key": "upper_1",
       "display_key": "upper_1_display",
+      "dynamic_display": true,
       "name": "Upper 1'",
       "min": 0,
       "max": 8,
@@ -111,6 +120,7 @@
     {
       "key": "lower_16",
       "display_key": "lower_16_display",
+      "dynamic_display": true,
       "name": "Lower 16'",
       "min": 0,
       "max": 8,
@@ -120,6 +130,7 @@
     {
       "key": "lower_5_13",
       "display_key": "lower_5_13_display",
+      "dynamic_display": true,
       "name": "Lower 5 1/3'",
       "min": 0,
       "max": 8,
@@ -129,6 +140,7 @@
     {
       "key": "lower_8",
       "display_key": "lower_8_display",
+      "dynamic_display": true,
       "name": "Lower 8'",
       "min": 0,
       "max": 8,
@@ -138,6 +150,7 @@
     {
       "key": "lower_4",
       "display_key": "lower_4_display",
+      "dynamic_display": true,
       "name": "Lower 4'",
       "min": 0,
       "max": 8,
@@ -147,6 +160,7 @@
     {
       "key": "lower_2_23",
       "display_key": "lower_2_23_display",
+      "dynamic_display": true,
       "name": "Lower 2 2/3'",
       "min": 0,
       "max": 8,
@@ -156,6 +170,7 @@
     {
       "key": "lower_2",
       "display_key": "lower_2_display",
+      "dynamic_display": true,
       "name": "Lower 2'",
       "min": 0,
       "max": 8,
@@ -165,6 +180,7 @@
     {
       "key": "lower_1_35",
       "display_key": "lower_1_35_display",
+      "dynamic_display": true,
       "name": "Lower 1 3/5'",
       "min": 0,
       "max": 8,
@@ -174,6 +190,7 @@
     {
       "key": "lower_1_13",
       "display_key": "lower_1_13_display",
+      "dynamic_display": true,
       "name": "Lower 1 1/3'",
       "min": 0,
       "max": 8,
@@ -183,6 +200,7 @@
     {
       "key": "lower_1",
       "display_key": "lower_1_display",
+      "dynamic_display": true,
       "name": "Lower 1'",
       "min": 0,
       "max": 8,
@@ -192,6 +210,7 @@
     {
       "key": "pedal_16",
       "display_key": "pedal_16_display",
+      "dynamic_display": true,
       "name": "Pedal 16'",
       "min": 0,
       "max": 8,
@@ -201,6 +220,7 @@
     {
       "key": "pedal_5_13",
       "display_key": "pedal_5_13_display",
+      "dynamic_display": true,
       "name": "Pedal 5 1/3'",
       "min": 0,
       "max": 8,
@@ -210,6 +230,7 @@
     {
       "key": "pedal_8",
       "display_key": "pedal_8_display",
+      "dynamic_display": true,
       "name": "Pedal 8'",
       "min": 0,
       "max": 8,
@@ -219,6 +240,7 @@
     {
       "key": "pedal_4",
       "display_key": "pedal_4_display",
+      "dynamic_display": true,
       "name": "Pedal 4'",
       "min": 0,
       "max": 8,
@@ -228,6 +250,7 @@
     {
       "key": "pedal_2_23",
       "display_key": "pedal_2_23_display",
+      "dynamic_display": true,
       "name": "Pedal 2 2/3'",
       "min": 0,
       "max": 8,
@@ -237,6 +260,7 @@
     {
       "key": "pedal_2",
       "display_key": "pedal_2_display",
+      "dynamic_display": true,
       "name": "Pedal 2'",
       "min": 0,
       "max": 8,
@@ -246,6 +270,7 @@
     {
       "key": "pedal_1_35",
       "display_key": "pedal_1_35_display",
+      "dynamic_display": true,
       "name": "Pedal 1 3/5'",
       "min": 0,
       "max": 8,
@@ -255,6 +280,7 @@
     {
       "key": "pedal_1_13",
       "display_key": "pedal_1_13_display",
+      "dynamic_display": true,
       "name": "Pedal 1 1/3'",
       "min": 0,
       "max": 8,
@@ -264,6 +290,7 @@
     {
       "key": "pedal_1",
       "display_key": "pedal_1_display",
+      "dynamic_display": true,
       "name": "Pedal 1'",
       "min": 0,
       "max": 8,
@@ -497,6 +524,143 @@
       "min": 0,
       "max": 1,
       "default": 0.01,
+      "dynamic_display": true
+    },
+    {
+      "key": "horn_slow_speed",
+      "name": "Horn Slow Speed",
+      "min": 5,
+      "max": 200,
+      "default": 40.32,
+      "unit": "RPM",
+      "dynamic_display": true
+    },
+    {
+      "key": "horn_fast_speed",
+      "name": "Horn Fast Speed",
+      "min": 100,
+      "max": 900,
+      "default": 423.36,
+      "unit": "RPM",
+      "dynamic_display": true
+    },
+    {
+      "key": "drum_slow_speed",
+      "name": "Drum Slow Speed",
+      "min": 5,
+      "max": 100,
+      "default": 36,
+      "unit": "RPM",
+      "dynamic_display": true
+    },
+    {
+      "key": "drum_fast_speed",
+      "name": "Drum Fast Speed",
+      "min": 60,
+      "max": 600,
+      "default": 357.3,
+      "unit": "RPM",
+      "dynamic_display": true
+    },
+    {
+      "key": "horn_acceleration",
+      "name": "Horn Acceleration",
+      "min": 0.05,
+      "max": 2,
+      "default": 0.161,
+      "unit": "s",
+      "dynamic_display": true
+    },
+    {
+      "key": "horn_deceleration",
+      "name": "Horn Deceleration",
+      "min": 0.05,
+      "max": 2,
+      "default": 0.321,
+      "unit": "s",
+      "dynamic_display": true
+    },
+    {
+      "key": "drum_acceleration",
+      "name": "Drum Acceleration",
+      "min": 0.5,
+      "max": 10,
+      "default": 4.127,
+      "unit": "s",
+      "dynamic_display": true
+    },
+    {
+      "key": "drum_deceleration",
+      "name": "Drum Deceleration",
+      "min": 0.5,
+      "max": 10,
+      "default": 1.371,
+      "unit": "s",
+      "dynamic_display": true
+    },
+    {
+      "key": "attack_click_level",
+      "name": "Attack Click Level",
+      "min": 0,
+      "max": 1,
+      "default": 0.5,
+      "dynamic_display": true
+    },
+    {
+      "key": "release_click_level",
+      "name": "Release Click Level",
+      "min": 0,
+      "max": 1,
+      "default": 0.25,
+      "dynamic_display": true
+    },
+    {
+      "key": "click_min_length",
+      "name": "Click Min Length",
+      "min": 0,
+      "max": 1,
+      "default": 0.125,
+      "dynamic_display": true
+    },
+    {
+      "key": "click_max_length",
+      "name": "Click Max Length",
+      "min": 0,
+      "max": 1,
+      "default": 0.625,
+      "dynamic_display": true
+    },
+    {
+      "key": "scanner_rate",
+      "name": "Scanner Rate",
+      "min": 4,
+      "max": 22,
+      "default": 7.25,
+      "unit": "Hz",
+      "dynamic_display": true
+    },
+    {
+      "key": "scanner_v1_depth",
+      "name": "V1 Depth",
+      "min": 0,
+      "max": 12,
+      "default": 3,
+      "dynamic_display": true
+    },
+    {
+      "key": "scanner_v2_depth",
+      "name": "V2 Depth",
+      "min": 0,
+      "max": 12,
+      "default": 6,
+      "dynamic_display": true
+    },
+    {
+      "key": "scanner_v3_depth",
+      "name": "V3 Depth",
+      "min": 0,
+      "max": 12,
+      "default": 9,
       "dynamic_display": true
     }
   ]

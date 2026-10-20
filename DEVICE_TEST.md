@@ -61,3 +61,16 @@ and restarted MPC successfully.
   `MPC.settings`, and restarted MPC.
 - Confirmed one plugin-list entry, an active `acvs` service and MPC process,
   and a matching installed `TUI.json` checksum (`2c69d33b42b8becc769055c9fb25a95a`).
+
+## 2026-10-20 — release 0.2.0
+
+- Built and validated the portable catalog package with 0 warnings; the host
+  test suite passed with 71 parameters.
+- Installed the final package on the Force and restarted MPC successfully.
+- Confirmed manifest version 0.2.0, exactly one plugin-list entry, an active
+  `acvs` service and a running MPC process (PID 648 after the restart).
+- Installed binary MD5: `16cb1529a8530261b93fee55fc1de857`.
+- Confirmed the four-page UPPER, LOWER/PEDAL, ORGAN and SETTINGS layout from the
+  device screenshots in `docs/images/`.
+- The release packager now normalizes `plugin_list.awk` to LF line endings and
+  has regression coverage for Windows checkouts; all 130 toolkit tests passed.
