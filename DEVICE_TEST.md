@@ -74,3 +74,21 @@ and restarted MPC successfully.
   device screenshots in `docs/images/`.
 - The release packager now normalizes `plugin_list.awk` to LF line endings and
   has regression coverage for Windows checkouts; all 130 toolkit tests passed.
+
+## 2026-10-22 — release 0.2.1
+
+- Rebuilt the plugin with the wrapper fix that stops ordinary MPC parameter
+  writes from requesting an `UpdateDisplay` and rate-limits required display
+  refreshes to one per 50 ms.
+- The host regression test issued 32 writes to `pedal_split` over 4096 frames
+  and observed zero `UpdateDisplay` calls; the complete 71-parameter host test
+  passed.
+- Added and validated `params.lock` so future builds reject parameter-index
+  changes that would break projects, automation or Q-Link maps.
+- Installed the final portable package on the Force and restarted MPC. Confirmed
+  manifest version 0.2.1, exactly one plugin-list entry, an active `acvs` service
+  and a running MPC process (PID 626 after the restart).
+- Installed binary MD5: `6794d55636bfd3e1237f80109d06e1e3`.
+
+The remaining interactive check is moving a physical Q-Link on track edit →
+automation; this input path cannot be exercised over SSH.

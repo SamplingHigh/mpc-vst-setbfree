@@ -6,11 +6,12 @@ Force. It runs in MPC's plugin host and has a native touchscreen skin.
 
 ![setBfree Organ running on Akai Force](docs/images/setbfree-organ-force.png)
 
-The current release is **0.2.0**. It provides:
+The current release is **0.2.1**. It provides:
 
 - upper and lower drawbars with traditional colour groups, plus the authentic
   16' and 8' pedal controls;
-- touchscreen, Data Wheel and Q-Link control;
+- touchscreen, Data Wheel and Q-Link control, including reliable physical
+  Q-Links on MPC's track automation screen;
 - percussion, vibrato/chorus, scanner, swell, overdrive and reverb controls;
 - editable Leslie motor speeds and acceleration, key-click levels and organ
   leakage parameters;
@@ -32,7 +33,7 @@ the engine are upper/lower C2-C7 (36-96) and pedal C1-C3 (24-49).
 
 ## Install
 
-Download `setBfree-Organ-0.2.0-mpc-armv7.zip` from the GitHub release and
+Download `setBfree-Organ-0.2.1-mpc-armv7.zip` from the GitHub release and
 follow the included `INSTALL.md`. Installation requires root SSH access to a
 first-generation MPC OS device and restarts the MPC application.
 
@@ -45,7 +46,7 @@ both repositories, check out the tested porting-kit revision, then point
 
 ```sh
 git clone https://github.com/SamplingHigh/mpc-vst-plugins.git
-git -C mpc-vst-plugins checkout 7f3c789494b75b8e165421809c83319cd3da6584
+git -C mpc-vst-plugins checkout 5ca9bbcb3e5ab5e07f68ae3a40adfc63ebd8b92a
 git clone https://github.com/SamplingHigh/mpc-vst-setbfree.git
 cd mpc-vst-setbfree
 MPC_VST=../mpc-vst-plugins ./test.sh
@@ -69,7 +70,7 @@ and restarts the MPC application without replacing the plugin binary. Set
 `FORCE_HOST`, pass `-ForceHost` to the PowerShell script, or put the device
 address in a local `.force-host` file.
 
-This targets ARM hard-float with glibc 2.31 compatibility. The 0.2.0 release
+This targets ARM hard-float with glibc 2.31 compatibility. The 0.2.1 release
 binary has a highest required GLIBC symbol of 2.29.
 
 ## Source and licence
