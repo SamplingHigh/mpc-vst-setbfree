@@ -4,3 +4,8 @@ dist-catalog/
 *.zip
 *.bak
 .force-host
+.force-password
+.force-hostkey
+preview-*.png
+Update-SkinOnForce.log
+work_images/

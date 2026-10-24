@@ -2,7 +2,7 @@
   "name": "setBfree Organ",
   "vendor": "Force Runtime",
   "uid": "SbF1",
-  "version": 2001,
+  "version": 3000,
   "so": "setbfree.so",
   "params": "params.json",
   "layout": "layout.conf",

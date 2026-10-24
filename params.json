@@ -473,7 +473,7 @@
         "V3",
         "V2",
         "V1",
-        "0",
+        "OFF",
         "C1",
         "C2",
         "C3"
@@ -487,7 +487,7 @@
         "V3",
         "V2",
         "V1",
-        "0",
+        "OFF",
         "C1",
         "C2",
         "C3"
@@ -662,6 +662,87 @@
       "max": 12,
       "default": 9,
       "dynamic_display": true
+    },
+    {
+      "key": "upper_level",
+      "name": "Upper Level",
+      "min": 0,
+      "max": 100,
+      "default": 60,
+      "display": "int",
+      "unit": "%"
+    },
+    {
+      "key": "lower_level",
+      "name": "Lower Level",
+      "min": 0,
+      "max": 100,
+      "default": 60,
+      "display": "int",
+      "unit": "%"
+    },
+    {
+      "key": "pedal_level",
+      "name": "Pedal Level",
+      "min": 0,
+      "max": 100,
+      "default": 60,
+      "display": "int",
+      "unit": "%"
+    },
+    {
+      "key": "reverb_input",
+      "name": "Reverb Input Gain",
+      "min": 1,
+      "max": 50,
+      "default": 10,
+      "display": "int",
+      "unit": "%"
+    },
+    {
+      "key": "reverb_output",
+      "name": "Reverb Output Gain",
+      "min": 0,
+      "max": 200,
+      "default": 100,
+      "display": "int",
+      "unit": "%"
+    },
+    {
+      "key": "drive_bias",
+      "name": "Drive Bias",
+      "min": 0,
+      "max": 100,
+      "default": 53.47,
+      "display": "int",
+      "unit": "%"
+    },
+    {
+      "key": "drive_feedback",
+      "name": "Drive Feedback",
+      "min": 0,
+      "max": 100,
+      "default": 62.14,
+      "display": "int",
+      "unit": "%"
+    },
+    {
+      "key": "drive_sag",
+      "name": "Drive Power Sag",
+      "min": 0,
+      "max": 100,
+      "default": 18.8,
+      "display": "int",
+      "unit": "%"
+    },
+    {
+      "key": "sustain_enable",
+      "name": "Pedal Function",
+      "options": [
+        "Leslie Speed",
+        "Sustain"
+      ],
+      "default": 0
     }
   ]
 }

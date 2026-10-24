@@ -69,3 +69,12 @@ scanner_rate
 scanner_v1_depth
 scanner_v2_depth
 scanner_v3_depth
+upper_level
+lower_level
+pedal_level
+reverb_input
+reverb_output
+drive_bias
+drive_feedback
+drive_sag
+sustain_enable

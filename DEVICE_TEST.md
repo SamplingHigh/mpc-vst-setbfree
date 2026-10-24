@@ -21,7 +21,7 @@ play all three split modes, exercise the skin/Q-Links, and save/reload a project
   8 is full level.
 - Confirmed the default drawbar registrations, three drawbar colour groups and
   overdrive defaults on the device.
-- The screenshot in `docs/images/setbfree-organ-force.png` records the running
+- The updated screenshot in `docs/images/setbfree-organ-01-upper.png` records the running
   plugin on the tested Force.
 
 ## 2026-10-19 — release 0.1.12 portable package
@@ -92,3 +92,19 @@ and restarted MPC successfully.
 
 The remaining interactive check is moving a physical Q-Link on track edit →
 automation; this input path cannot be exercised over SSH.
+
+## 2026-10-24 — release 0.3.0
+
+- Built the complete 80-parameter ARMv7 plugin and five-page skin from the
+  public pinned toolkit revision; the host test passed, including state restore,
+  Q-Link/Data Wheel stepping and concurrent parameter changes while rendering.
+- The Force CPU bench measured 8.9% p99 and 12.4% worst-block use at 16 voices.
+  Its general Q-Link sweep intentionally reports FAIL because it reaches the
+  four SETTINGS-page crosstalk controls, each of which rebuilds the organ core.
+- The first portable-package install caught CRLF line endings in the packaged
+  BusyBox `awk` helper before replacing the existing plugin. The packager was
+  fixed, its regression tests passed, and the rebuilt package validated with
+  zero catalog warnings.
+- Installed the corrected 0.3.0 portable package on the Force. Confirmed one
+  plugin-list entry, active `acvs`, a running MPC process (PID 6211), and an
+  installed binary MD5 of `9f9d1140ea1c441897b16418f4da0ba5`.

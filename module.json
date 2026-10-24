@@ -2,7 +2,7 @@
   "id": "setbfree",
   "name": "setBfree Organ",
   "abbrev": "B3",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Tonewheel organ with overdrive, reverb, rotary speaker and optional one-keyboard manual splits",
   "author": "setBfree contributors; MPC VST port Force Runtime",
   "dsp": "dsp.so",
@@ -69,8 +69,8 @@
       {"key":"perc_normal_level","name":"Normal Level","min":0.0,"max":1.0,"default":1.0},
       {"key":"perc_soft_level","name":"Soft Level","min":0.0,"max":0.89125,"default":0.5012},
       {"key":"perc_gain","name":"Percussion Gain","min":0.0,"max":22.0,"default":11.0},
-      {"key":"vibrato_upper_mode","name":"Vibrato Upper","options":["V3","V2","V1","0","C1","C2","C3"],"default":3},
-      {"key":"vibrato_lower_mode","name":"Vibrato Lower","options":["V3","V2","V1","0","C1","C2","C3"],"default":3},
+      {"key":"vibrato_upper_mode","name":"Vibrato Upper","options":["V3","V2","V1","OFF","C1","C2","C3"],"default":3},
+      {"key":"vibrato_lower_mode","name":"Vibrato Lower","options":["V3","V2","V1","OFF","C1","C2","C3"],"default":3},
       {"key":"compartment_crosstalk","name":"Compartment Crosstalk","min":0.0,"max":1.0,"default":0.01,"dynamic_display":true},
       {"key":"transformer_crosstalk","name":"Transformer Crosstalk","min":0.0,"max":1.0,"default":0.0,"dynamic_display":true},
       {"key":"terminal_crosstalk","name":"Terminal Crosstalk","min":0.0,"max":1.0,"default":0.01,"dynamic_display":true},
@@ -91,7 +91,16 @@
       {"key":"scanner_rate","name":"Scanner Rate","min":4.0,"max":22.0,"default":7.25,"unit":"Hz","dynamic_display":true},
       {"key":"scanner_v1_depth","name":"V1 Depth","min":0.0,"max":12.0,"default":3.0,"dynamic_display":true},
       {"key":"scanner_v2_depth","name":"V2 Depth","min":0.0,"max":12.0,"default":6.0,"dynamic_display":true},
-      {"key":"scanner_v3_depth","name":"V3 Depth","min":0.0,"max":12.0,"default":9.0,"dynamic_display":true}
+      {"key":"scanner_v3_depth","name":"V3 Depth","min":0.0,"max":12.0,"default":9.0,"dynamic_display":true},
+      {"key":"upper_level","name":"Upper Level","min":0,"max":100,"default":60,"display":"int","unit":"%"},
+      {"key":"lower_level","name":"Lower Level","min":0,"max":100,"default":60,"display":"int","unit":"%"},
+      {"key":"pedal_level","name":"Pedal Level","min":0,"max":100,"default":60,"display":"int","unit":"%"},
+      {"key":"reverb_input","name":"Reverb Input Gain","min":1,"max":50,"default":10,"display":"int","unit":"%"},
+      {"key":"reverb_output","name":"Reverb Output Gain","min":0,"max":200,"default":100,"display":"int","unit":"%"},
+      {"key":"drive_bias","name":"Drive Bias","min":0,"max":100,"default":53.47,"display":"int","unit":"%"},
+      {"key":"drive_feedback","name":"Drive Feedback","min":0,"max":100,"default":62.14,"display":"int","unit":"%"},
+      {"key":"drive_sag","name":"Drive Power Sag","min":0,"max":100,"default":18.8,"display":"int","unit":"%"},
+      {"key":"sustain_enable","name":"Pedal Function","options":["Leslie Speed","Sustain"],"default":0}
     ]
   }
 }

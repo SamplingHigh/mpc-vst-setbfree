@@ -4,36 +4,47 @@ A native VST2 port of the [setBfree](https://github.com/pantherb/setBfree)
 tonewheel organ engine for first-generation Akai MPC standalone devices and
 Force. It runs in MPC's plugin host and has a native touchscreen skin.
 
-![setBfree Organ running on Akai Force](docs/images/setbfree-organ-force.png)
+![setBfree Organ running on Akai Force](docs/images/setbfree-organ.png)
 
-The current release is **0.2.1**. It provides:
+The current release is **0.3.0**. It provides:
 
-- upper and lower drawbars with traditional colour groups, plus the authentic
-  16' and 8' pedal controls;
-- touchscreen, Data Wheel and Q-Link control, including reliable physical
-  Q-Links on MPC's track automation screen;
-- percussion, vibrato/chorus, scanner, swell, overdrive and reverb controls;
-- editable Leslie motor speeds and acceleration, key-click levels and organ
-  leakage parameters;
+- upper and lower drawbars with traditional colour groups, plus 16', 8' and 4'
+  pedal controls;
+- touchscreen, Data Wheel and Q-Link control, including MPC's page-following
+  KNOBS screen;
+- a five-page UPPER, LOWER/PEDAL, ORGAN, FX and SETTINGS touchscreen layout;
+- percussion, per-manual vibrato/chorus, scanner, swell and manual-level
+  controls;
+- editable overdrive, reverb, Leslie motor, key-click and leakage parameters;
+- switchable sustain-pedal or Leslie-speed pedal operation;
 - one-keyboard operation with optional upper/lower or upper/lower/pedal splits;
 - VST chunk state for project save and reload.
 
 ## Screens
 
-![Lower and pedal drawbars](docs/images/setbfree-organ-force-lower-pedal.png)
+![Upper drawbars and performance controls](docs/images/setbfree-organ-01-upper.png)
 
-![Percussion, vibrato and scanner controls](docs/images/setbfree-organ-force-organ.png)
+![Lower and pedal drawbars](docs/images/setbfree-organ-02-lower_pedal.png)
 
-![Leslie, key-click and leakage settings](docs/images/setbfree-organ-force-settings.png)
+![Percussion, scanner and manual controls](docs/images/setbfree-organ-03-organ.png)
+
+![Overdrive and reverb controls](docs/images/setbfree-organ-04-fx.png)
+
+![Leslie, key-click and leakage settings](docs/images/setbfree-organ-05-settings.png)
 
 Every incoming channel-voice message is routed to setBfree's upper-manual MIDI
 channel. With split mode disabled, the whole keyboard drives the upper manual.
 The two split modes use setBfree's native channel-A key map. MIDI note ranges in
 the engine are upper/lower C2-C7 (36-96) and pedal C1-C3 (24-49).
 
+The normal audio path measured 8.9% p99 and 12.4% worst-block CPU at 16 voices
+on a Force. Changing one of the four leakage/crosstalk settings rebuilds the
+organ core and can briefly mute audio; these controls are therefore on the
+SETTINGS page and are intended for sound setup rather than performance moves.
+
 ## Install
 
-Download `setBfree-Organ-0.2.1-mpc-armv7.zip` from the GitHub release and
+Download `setBfree-Organ-0.3.0-mpc-armv7.zip` from the GitHub release and
 follow the included `INSTALL.md`. Installation requires root SSH access to a
 first-generation MPC OS device and restarts the MPC application.
 
@@ -46,7 +57,7 @@ both repositories, check out the tested porting-kit revision, then point
 
 ```sh
 git clone https://github.com/SamplingHigh/mpc-vst-plugins.git
-git -C mpc-vst-plugins checkout 5ca9bbcb3e5ab5e07f68ae3a40adfc63ebd8b92a
+git -C mpc-vst-plugins checkout cf1a5609ed706fc966f653bb144e979d07c67b74
 git clone https://github.com/SamplingHigh/mpc-vst-setbfree.git
 cd mpc-vst-setbfree
 MPC_VST=../mpc-vst-plugins ./test.sh
@@ -70,7 +81,7 @@ and restarts the MPC application without replacing the plugin binary. Set
 `FORCE_HOST`, pass `-ForceHost` to the PowerShell script, or put the device
 address in a local `.force-host` file.
 
-This targets ARM hard-float with glibc 2.31 compatibility. The 0.2.1 release
+This targets ARM hard-float with glibc 2.31 compatibility. The 0.3.0 release
 binary has a highest required GLIBC symbol of 2.29.
 
 ## Source and licence

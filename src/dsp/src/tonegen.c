@@ -267,6 +267,9 @@ initValues (struct b_tonegen* t)
 #endif
 
 	t->swellPedalGain  = 0.07; /* initial level */
+	t->upperManualGain = 1.0;
+	t->lowerManualGain = 1.0;
+	t->pedalManualGain = 1.0;
 	t->outputLevelTrim = 0.07; /* 127/127 * midi-signal */
 	t->tuning          = 440.0;
 
@@ -493,6 +496,27 @@ setTuning (struct b_tonegen* t, double refA_Hz)
 	if ((220.0 <= refA_Hz) && (refA_Hz <= 880.0)) {
 		t->tuning = refA_Hz;
 	}
+}
+
+void
+setUpperManualGain (struct b_tonegen* t, double gain)
+{
+	t->upperManualGain = (float)gain;
+	t->drawBarChange = 1;
+}
+
+void
+setLowerManualGain (struct b_tonegen* t, double gain)
+{
+	t->lowerManualGain = (float)gain;
+	t->drawBarChange = 1;
+}
+
+void
+setPedalManualGain (struct b_tonegen* t, double gain)
+{
+	t->pedalManualGain = (float)gain;
+	t->drawBarChange = 1;
 }
 
 /**
@@ -3265,24 +3289,24 @@ oscGenerateFragment (struct b_tonegen* t, float* buf, size_t lengthSamples)
 
 			if (reroute || recomputeRouting) {
 				if (t->oldRouting & RT_PERC) { /* Percussion */
-					aop->sumPercn = aop->busLevel[t->percSendBus];
+					aop->sumPercn = aop->busLevel[t->percSendBus] * t->upperManualGain;
 				} else {
 					aop->sumPercn = 0.0;
 				}
 
 				aop->sumScanr = 0.0;           /* Initialize scanner level */
-				aop->sumSwell = aop->sumPedal; /* Initialize swell level */
+				aop->sumSwell = aop->sumPedal * t->pedalManualGain; /* Initialize swell level */
 
 				if (t->oldRouting & RT_UPPRVIB) {       /* Upper manual ... */
-					aop->sumScanr += aop->sumUpper; /* ... to vibrato */
+					aop->sumScanr += aop->sumUpper * t->upperManualGain; /* ... to vibrato */
 				} else {
-					aop->sumSwell += aop->sumUpper; /* ... to swell pedal */
+					aop->sumSwell += aop->sumUpper * t->upperManualGain; /* ... to swell pedal */
 				}
 
 				if (t->oldRouting & RT_LOWRVIB) {       /* Lower manual ... */
-					aop->sumScanr += aop->sumLower; /* ... to vibrato */
+					aop->sumScanr += aop->sumLower * t->lowerManualGain; /* ... to vibrato */
 				} else {
-					aop->sumSwell += aop->sumLower; /* ... to swell pedal */
+					aop->sumSwell += aop->sumLower * t->lowerManualGain; /* ... to swell pedal */
 				}
 			} /* if rerouting */
 

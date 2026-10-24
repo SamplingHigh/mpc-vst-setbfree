@@ -1,9 +1,9 @@
 # Releasing
 
-Release 0.2.1 uses a pinned revision of the public MPC VST porting kit:
+Release 0.3.0 uses a pinned revision of the public MPC VST porting kit:
 
 - build, wrapper, skin generation, portable packaging and catalog validation:
-  `SamplingHigh/mpc-vst-plugins@5ca9bbcb3e5ab5e07f68ae3a40adfc63ebd8b92a`.
+  `SamplingHigh/mpc-vst-plugins@cf1a5609ed706fc966f653bb144e979d07c67b74`.
 
 The catalog binary is built with Zig 0.17.0 for ARM hard-float and glibc 2.31:
 
@@ -22,10 +22,11 @@ python3 /path/to/mpc-vst-plugins-release/tools/release.py \
   --so build/setbfree.so \
   --skin "build/skin/Force Runtime - VST - setBfree Organ" \
   --entry build/pluginlist-entry.xml \
-  --version 0.2.1 \
+  --version 0.3.0 \
   --id setbfree-organ \
   --repo SamplingHigh/mpc-vst-setbfree \
   --license GPL-2.0-or-later \
+  --bench build/bench.txt \
   --about "Native tonewheel organ with three drawbar manuals, rotary speaker and keyboard splits." \
   --extra LICENSE:licenses/GPL-2.0-or-later.txt \
   --extra THIRD_PARTY_NOTICES.md:licenses/THIRD_PARTY_NOTICES.md \
@@ -33,12 +34,12 @@ python3 /path/to/mpc-vst-plugins-release/tools/release.py \
   -o dist
 
 python3 /path/to/mpc-vst-plugins-release/tools/catalog_check.py \
-  dist/setBfree-Organ-0.2.1-mpc-armv7.zip \
+  dist/setBfree-Organ-0.3.0-mpc-armv7.zip \
   --catalog --expect-id setbfree-organ \
   --expect-repo SamplingHigh/mpc-vst-setbfree --require-portable
 ```
 
-The expected result is `OK: setbfree-organ 0.2.1 (0 warnings)`. The highest
+The expected result is `OK: setbfree-organ 0.3.0 (0 warnings)`. The highest
 required GLIBC symbol in the released binary is 2.29. The release toolkit must
 come from a Linux checkout, or `tools/release/plugin_list.awk` must be normalized
 to LF before packaging. The Force BusyBox `awk` rejects a CRLF copy even though

@@ -19,7 +19,7 @@
 #include "state.h"
 
 #define BLOCK 128
-#define PARAM_COUNT 71
+#define PARAM_COUNT 80
 
 double SampleRateD = 44100.0;
 
@@ -120,12 +120,23 @@ static const param_def_t defs[PARAM_COUNT] = {
     {"scanner_v1_depth", NULL, 3.0, SCALE_SCANNER_DEPTH},
     {"scanner_v2_depth", NULL, 6.0, SCALE_SCANNER_DEPTH},
     {"scanner_v3_depth", NULL, 9.0, SCALE_SCANNER_DEPTH},
+
+    {"upper_level", NULL, 60, SCALE_PERCENT},
+    {"lower_level", NULL, 60, SCALE_PERCENT},
+    {"pedal_level", NULL, 60, SCALE_PERCENT},
+    {"reverb_input", NULL, 10, SCALE_PERCENT},
+    {"reverb_output", NULL, 100, SCALE_RAW},
+    {"drive_bias", "xov.ctl_biased", 53.47, SCALE_PERCENT},
+    {"drive_feedback", "xov.ctl_biased_gfb", 62.14, SCALE_PERCENT},
+    {"drive_sag", "xov.ctl_sagtobias", 18.8, SCALE_PERCENT},
+    {"sustain_enable", NULL, 0, SCALE_TOGGLE},
 };
 
 enum {
     P_SPLIT_MODE = 0, P_PEDAL_SPLIT = 1, P_UPPER_SPLIT = 2,
     P_PERC_VOLUME = 31, P_PERC_DECAY = 32, P_PERC_HARMONIC = 33,
     P_VIBRATO = 34, P_VIBRATO_UPPER = 35, P_VIBRATO_LOWER = 36,
+    P_REVERB = 43,
     P_PERC_FAST_TIME = 44, P_PERC_SLOW_TIME, P_PERC_NORMAL_LEVEL,
     P_PERC_SOFT_LEVEL, P_PERC_GAIN, P_VIBRATO_UPPER_MODE,
     P_VIBRATO_LOWER_MODE, P_COMPARTMENT_CROSSTALK,
@@ -135,7 +146,9 @@ enum {
     P_DRUM_ACCELERATION, P_DRUM_DECELERATION, P_ATTACK_CLICK_LEVEL,
     P_RELEASE_CLICK_LEVEL, P_CLICK_MIN_LENGTH, P_CLICK_MAX_LENGTH,
     P_SCANNER_RATE, P_SCANNER_V1_DEPTH, P_SCANNER_V2_DEPTH,
-    P_SCANNER_V3_DEPTH
+    P_SCANNER_V3_DEPTH, P_UPPER_LEVEL, P_LOWER_LEVEL, P_PEDAL_LEVEL,
+    P_REVERB_INPUT, P_REVERB_OUTPUT, P_DRIVE_BIAS, P_DRIVE_FEEDBACK,
+    P_DRIVE_SAG, P_SUSTAIN_ENABLE
 };
 
 typedef struct {
@@ -145,6 +158,8 @@ typedef struct {
     double value[PARAM_COUNT];
     int rebuild_delay;
     uint64_t changed[2];
+    int sustain_down;
+    uint8_t sustained_notes[128];
 } organ_t;
 
 static int clampi(int v, int lo, int hi) {
@@ -214,6 +229,16 @@ static void apply_manual_vibrato(organ_t *o, int i) {
     if ((int)lround(o->value[other]) != 3 && (int)lround(o->value[other]) != mode) {
         o->value[other] = mode;
         mark_changed(o, other);
+    }
+}
+
+static void release_sustained_notes(organ_t *o) {
+    uint8_t off[3] = {0x80, 0, 0};
+    for (int note = 0; note < 128; ++note) {
+        if (!o->sustained_notes[note]) continue;
+        off[1] = (uint8_t)note;
+        parse_raw_midi_data(&o->core, off, sizeof(off));
+        o->sustained_notes[note] = 0;
     }
 }
 
@@ -322,6 +347,31 @@ static void apply_param(organ_t *o, int i) {
     case P_SCANNER_V3_DEPTH:
         setScannerV3Depth(&o->core.synth->inst_vibrato, o->value[i]);
         return;
+    case P_UPPER_LEVEL:
+        setUpperManualGain(o->core.synth, o->value[i] / 100.0);
+        return;
+    case P_LOWER_LEVEL:
+        setLowerManualGain(o->core.synth, o->value[i] / 100.0);
+        return;
+    case P_PEDAL_LEVEL:
+        setPedalManualGain(o->core.synth, o->value[i] / 100.0);
+        return;
+    case P_REVERB_INPUT:
+        setReverbInputGain(o->core.reverb, (float)(o->value[i] / 100.0));
+        return;
+    case P_REVERB_OUTPUT: {
+        float output = (float)(o->value[i] / 100.0);
+        float mix = (float)clampd(o->value[P_REVERB] / 100.0, 0.0, 1.0);
+        o->core.reverb->wet = output * mix;
+        o->core.reverb->dry = output * (1.0f - mix);
+        return;
+    }
+    case P_SUSTAIN_ENABLE:
+        if (!lround(o->value[i])) {
+            release_sustained_notes(o);
+            o->sustain_down = 0;
+        }
+        return;
     default:
         break;
     }
@@ -378,6 +428,8 @@ static int rebuild_core(organ_t *o) {
     old = o->core;
     o->core = fresh;
     o->rebuild_delay = 0;
+    o->sustain_down = 0;
+    memset(o->sustained_notes, 0, sizeof(o->sustained_notes));
     for (int i = 0; i < PARAM_COUNT; ++i)
         if (i < P_COMPARTMENT_CROSSTALK || i > P_WIRING_CROSSTALK) apply_param(o, i);
     midi_panic(&old);
@@ -416,6 +468,23 @@ static void organ_midi(void *instance, const uint8_t *msg, int len) {
     memcpy(m, msg, (size_t)len);
     /* One-keyboard mode: setBfree channel A is MIDI channel 1 / nibble 0. */
     if ((m[0] & 0xf0) >= 0x80 && (m[0] & 0xf0) <= 0xe0) m[0] &= 0xf0;
+    if (lround(o->value[P_SUSTAIN_ENABLE])) {
+        int type = m[0] & 0xf0;
+        if (type == 0xb0 && len >= 3 && m[1] == 64) {
+            int was_down = o->sustain_down;
+            o->sustain_down = m[2] >= 64;
+            if (was_down && !o->sustain_down) release_sustained_notes(o);
+            return;
+        }
+        if ((type == 0x80 || (type == 0x90 && len >= 3 && m[2] == 0)) && len >= 2) {
+            if (o->sustain_down) {
+                o->sustained_notes[m[1] & 0x7f] = 1;
+                return;
+            }
+        } else if (type == 0x90 && len >= 3 && m[2] != 0) {
+            o->sustained_notes[m[1] & 0x7f] = 0;
+        }
+    }
     parse_raw_midi_data(&o->core, m, (size_t)len);
 }
 
@@ -443,6 +512,7 @@ static void set_one(organ_t *o, const char *key, const char *text) {
     else if (defs[i].scale == SCALE_DRUM_TIME) v = clampd(v, 0.5, 10.0);
     else if (defs[i].scale == SCALE_SCANNER_RATE) v = clampd(v, 4.0, 22.0);
     else if (defs[i].scale == SCALE_SCANNER_DEPTH) v = clampd(v, 0.0, 12.0);
+    if (i == P_REVERB_OUTPUT) v = clampd(v, 0.0, 200.0);
     o->value[i] = v;
     apply_param(o, i);
     /* The published 0.1.12 project state contains the three original

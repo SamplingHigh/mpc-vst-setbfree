@@ -262,6 +262,11 @@ struct b_tonegen {
  */
 	float swellPedalGain;
 
+	/** Per-manual level trims used by the MPC port. */
+	float upperManualGain;
+	float lowerManualGain;
+	float pedalManualGain;
+
 	/**
  * Output level trim. Used to trim the overall output level.
  */
@@ -546,6 +551,9 @@ struct b_tonegen {
 extern void setToneGeneratorModel (struct b_tonegen* t, int variant);
 extern void setWavePrecision (struct b_tonegen* t, double precision);
 extern void setTuning (struct b_tonegen* t, double refA_Hz);
+extern void setUpperManualGain (struct b_tonegen* t, double gain);
+extern void setLowerManualGain (struct b_tonegen* t, double gain);
+extern void setPedalManualGain (struct b_tonegen* t, double gain);
 extern void setVibratoUpper (struct b_tonegen* t, int isEnabled);
 extern void setVibratoLower (struct b_tonegen* t, int isEnabled);
 extern int getVibratoRouting (struct b_tonegen* t);
