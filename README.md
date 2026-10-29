@@ -1,8 +1,10 @@
 # setBfree Organ for MPC OS
 
 A native VST2 port of the [setBfree](https://github.com/pantherb/setBfree)
-tonewheel organ engine for first-generation Akai MPC standalone devices and
-Force. It runs in MPC's plugin host and has a native touchscreen skin.
+tonewheel organ engine for Akai MPC standalone devices and Force. It runs in
+MPC's plugin host and has a native touchscreen skin. The ARMv7 release is
+verified on Force; the aarch64 Gen2 build is experimental and has not yet been
+run on Gen2 hardware.
 
 ![setBfree Organ running on Akai Force](docs/images/setbfree-organ.png)
 
@@ -44,9 +46,19 @@ SETTINGS page and are intended for sound setup rather than performance moves.
 
 ## Install
 
-Download `setBfree-Organ-0.3.0-mpc-armv7.zip` from the GitHub release and
-follow the included `INSTALL.md`. Installation requires root SSH access to a
-first-generation MPC OS device and restarts the MPC application.
+Download the package for the device from the GitHub release and follow its
+included `INSTALL.md`:
+
+- `setBfree-Organ-0.3.0-mpc-armv7.zip`: Force and first-generation MPCs;
+- `setBfree-Organ-0.3.0-gen2-experimental.zip`: Gen2 MPCs, experimental and
+  hardware untested. Its intentionally non-catalog filename prevents the public
+  catalog from advertising it before a physical-device confirmation.
+
+Installation requires root SSH access and restarts the MPC application. The
+two packages use the same plugin UID, parameter indices and state format, so
+projects remain compatible across architectures. Gen2 needs a writable
+removable-media `Synths` folder passed to the installer with `-t`; its internal
+`/synths/Synths` mount is read-only on the hardware tested by the porting kit.
 
 ## Build and test
 
@@ -61,10 +73,12 @@ git -C mpc-vst-plugins checkout cf1a5609ed706fc966f653bb144e979d07c67b74
 git clone https://github.com/SamplingHigh/mpc-vst-setbfree.git
 cd mpc-vst-setbfree
 MPC_VST=../mpc-vst-plugins ./test.sh
-MPC_VST=../mpc-vst-plugins ./build.sh
+MPC_VST=../mpc-vst-plugins ./test.sh aarch64
+MPC_VST=../mpc-vst-plugins ./build.sh all
 ```
 
-`build.sh` needs Docker with ARMv7/QEMU support. If an
+`build.sh` needs Docker with ARMv7 and ARM64/QEMU support. `build.sh armv7` or
+`build.sh aarch64` selects one target; the default builds both. If an
 `arm-linux-gnueabihf-gcc` toolchain is installed, use `build-cross.sh` instead.
 HTML skin artwork also needs Python, Pillow and Playwright Chromium; set
 `HTML_ART_PY` when that Python interpreter is outside the default path.
@@ -73,6 +87,7 @@ For a catalog-compatible build without Docker, install Zig and run:
 
 ```sh
 ZIG=/path/to/zig ./build-zig.sh
+MPC_VST=../mpc-vst-plugins ZIG=/path/to/zig ./build-zig-aarch64.sh
 ```
 
 For layout and artwork changes, `build-skin.sh` regenerates only the skin. On
@@ -81,8 +96,11 @@ and restarts the MPC application without replacing the plugin binary. Set
 `FORCE_HOST`, pass `-ForceHost` to the PowerShell script, or put the device
 address in a local `.force-host` file.
 
-This targets ARM hard-float with glibc 2.31 compatibility. The 0.3.0 release
-binary has a highest required GLIBC symbol of 2.29.
+Both 0.3.0 binaries have a highest required GLIBC symbol of 2.29. The ARMv7
+build targets ARM hard-float with glibc 2.31 compatibility. The aarch64 build
+targets Gen2 MPC OS 3.x; it passes the ARM64 functional host test and catalog
+package validation, but is not marked as hardware verified and is deliberately
+not submitted to the public plugin catalog yet.
 
 ## Source and licence
 

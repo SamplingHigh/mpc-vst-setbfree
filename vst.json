@@ -4,6 +4,10 @@
   "uid": "SbF1",
   "version": 3000,
   "so": "setbfree.so",
+  "targets": [
+    "armv7",
+    "aarch64"
+  ],
   "params": "params.json",
   "layout": "layout.conf",
   "art": "html",

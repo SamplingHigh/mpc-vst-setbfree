@@ -108,3 +108,20 @@ automation; this input path cannot be exercised over SSH.
 - Installed the corrected 0.3.0 portable package on the Force. Confirmed one
   plugin-list entry, active `acvs`, a running MPC process (PID 6211), and an
   installed binary MD5 of `9f9d1140ea1c441897b16418f4da0ba5`.
+
+## 2026-10-29 — experimental Gen2/aarch64 build
+
+- Built the unchanged 0.3.0 sources and pinned wrapper as an ELF64 aarch64 VST2
+  library. It exports `VSTPluginMain`, needs only `libm`, `libc` and
+  `libpthread`, and its highest required GLIBC symbol is 2.29.
+- Ran the complete 80-parameter functional host test as a static aarch64
+  executable under QEMU. Audio generation, two instances, parameter writes,
+  Data Wheel stepping, chunk restore, CC/NRPN control and concurrent
+  screen-side changes all passed.
+- Packaged `setBfree-Organ-0.3.0-mpc-aarch64.zip`; catalog validation reported
+  `OK: setbfree-organ 0.3.0 (0 warnings)`.
+- No physical Gen2 device was available. Installation, MPC loading, audio,
+  touchscreen rendering, Q-Links and project recall remain hardware untested;
+  the asset is therefore published only on the project release under the
+  non-catalog filename `setBfree-Organ-0.3.0-gen2-experimental.zip` and is
+  withheld from the public plugin catalog.
