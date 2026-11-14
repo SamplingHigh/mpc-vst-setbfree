@@ -23,9 +23,8 @@ Before publishing the draft:
 3. Confirm `tested.json` records the tested device and firmware.
 4. Publish the draft release. Publishing creates tag `v0.3.1`.
 
-The catalog continues to match only `*-mpc-armv7.zip`. The experimental Gen2
-build is not included in this workflow until it has been verified on physical
-Gen2 hardware.
+The release and catalog target ARMv7 first-generation devices only. Do not
+publish or advertise a Gen2 build without verification on physical hardware.
 
 ## Reproduce locally
 
@@ -37,16 +36,6 @@ ZIG=/path/to/zig \
 ./build-zig.sh
 
 MPC_VST=/path/to/mpc-vst-plugins ./test.sh
-```
-
-For the hardware-unverified Gen2 build:
-
-```sh
-MPC_VST=/path/to/mpc-vst-plugins \
-ZIG=/path/to/zig \
-./build-zig-aarch64.sh
-
-MPC_VST=/path/to/mpc-vst-plugins ./test.sh aarch64
 ```
 
 The ARMv7 binary's highest required GLIBC symbol must remain no newer than the

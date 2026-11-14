@@ -1,10 +1,9 @@
 # setBfree Organ for MPC OS
 
 A native VST2 port of the [setBfree](https://github.com/pantherb/setBfree)
-tonewheel organ engine for Akai MPC standalone devices and Force. It runs in
-MPC's plugin host and has a native touchscreen skin. The ARMv7 release is
-verified on Force; the aarch64 Gen2 build is experimental and has not yet been
-run on Gen2 hardware.
+tonewheel organ engine for first-generation Akai MPC standalone devices and
+Force. It runs in MPC's plugin host and has a native touchscreen skin. Release
+0.3.1 is verified on Force running MPC OS 3.10.1.
 
 ![setBfree Organ running on Akai Force](docs/images/setbfree-organ.png)
 
@@ -58,9 +57,9 @@ included `INSTALL.md`:
 The SDK-format package needs no root access on MPC OS 3.10.1. The scripted
 ARMv7 installer also supports the earlier `Synths` layout and restarts the MPC
 application. Release 0.3.1 keeps the same plugin UID, parameter indices and
-state format as 0.3.0, so saved projects remain compatible. The experimental
-Gen2 build remains available only on the project page and is not advertised in
-the public catalog until it has been verified on physical Gen2 hardware.
+state format as 0.3.0, so saved projects remain compatible. Gen2 is not a
+supported release target because no build has been verified on physical Gen2
+hardware.
 
 ## Build and test
 
@@ -75,12 +74,10 @@ git -C mpc-vst-plugins checkout 0dc17120cd7e952e95eeecdd820ac9e495a75ee9
 git clone https://github.com/SamplingHigh/mpc-vst-setbfree.git
 cd mpc-vst-setbfree
 MPC_VST=../mpc-vst-plugins ./test.sh
-MPC_VST=../mpc-vst-plugins ./test.sh aarch64
-MPC_VST=../mpc-vst-plugins ./build.sh all
+MPC_VST=../mpc-vst-plugins ./build.sh armv7
 ```
 
-`build.sh` needs Docker with ARMv7 and ARM64/QEMU support. `build.sh armv7` or
-`build.sh aarch64` selects one target; the default builds both. If an
+`build.sh` needs Docker with ARMv7/QEMU support. If an
 `arm-linux-gnueabihf-gcc` toolchain is installed, use `build-cross.sh` instead.
 HTML skin artwork also needs Python, Pillow and Playwright Chromium; set
 `HTML_ART_PY` when that Python interpreter is outside the default path.
@@ -89,7 +86,6 @@ For a catalog-compatible build without Docker, install Zig and run:
 
 ```sh
 ZIG=/path/to/zig ./build-zig.sh
-MPC_VST=../mpc-vst-plugins ZIG=/path/to/zig ./build-zig-aarch64.sh
 ```
 
 For layout and artwork changes, `build-skin.sh` regenerates only the skin. On
@@ -99,9 +95,7 @@ and restarts the MPC application without replacing the plugin binary. Set
 address in a local `.force-host` file.
 
 The 0.3.1 ARMv7 binary targets ARM hard-float with glibc 2.31 compatibility and
-is verified on Force MPC OS 3.10.1. The source also supports an aarch64 Gen2
-build, but that target remains hardware-unverified and is deliberately not
-submitted to the public plugin catalog yet.
+is verified on Force MPC OS 3.10.1.
 
 ## Source and licence
 

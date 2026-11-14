@@ -122,9 +122,9 @@ automation; this input path cannot be exercised over SSH.
   `OK: setbfree-organ 0.3.0 (0 warnings)`.
 - No physical Gen2 device was available. Installation, MPC loading, audio,
   touchscreen rendering, Q-Links and project recall remain hardware untested;
-  the asset is therefore published only on the project release under the
-  non-catalog filename `setBfree-Organ-0.3.0-gen2-experimental.zip` and is
-  withheld from the public plugin catalog.
+  the experimental assets were therefore withdrawn on 2026-11-14. Gen2 is not
+  a supported release target unless a future build is verified on physical
+  hardware.
 
 ## 2026-11-14 — release 0.3.1 on Force MPC OS 3.10.1
 

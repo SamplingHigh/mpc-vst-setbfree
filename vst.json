@@ -5,8 +5,7 @@
   "version": 3010,
   "so": "setbfree.so",
   "targets": [
-    "armv7",
-    "aarch64"
+    "armv7"
   ],
   "params": "params.json",
   "layout": "layout.conf",
