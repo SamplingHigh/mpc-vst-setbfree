@@ -2,7 +2,19 @@
 # Installed temporarily in /tmp by Update-SkinOnForce.ps1.
 set -eu
 
-target='/sdcard/Synths/Force Runtime - VST - setBfree Organ'
+target_file='/media/az01-internal/.openmpcpm-target'
+if [ -f "$target_file" ]; then
+  plugin_root=$(sed -n '1p' "$target_file")
+else
+  plugin_root='/sdcard/Synths'
+fi
+target="$plugin_root/SamplingHigh - VST - setBfree Organ"
+legacy_target="$plugin_root/Force Runtime - VST - setBfree Organ"
+if [ ! -d "$target" ] && [ -d "$legacy_target" ]; then
+  # Keep skin-only testing usable until the next full package migrates the
+  # installed plugin directory to the SamplingHigh vendor name.
+  target="$legacy_target"
+fi
 stage='/tmp/setbfree-skin-stage'
 archive='/tmp/setbfree-skin-update.tgz'
 old="$target/Plugin Skins.previous"

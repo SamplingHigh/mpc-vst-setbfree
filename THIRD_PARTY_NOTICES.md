@@ -14,11 +14,10 @@ adapter boundary are documented in [`src/VENDORED.md`](src/VENDORED.md).
 
 ## MPC porting kit
 
-The build and skin generation use
-the MIT-licensed [mpc-vst-plugins](https://github.com/sd88me/mpc-vst-plugins)
+The build and skin generation use the MIT-licensed
+[Open MPC porting kit](https://github.com/open-mpc/mpc-vst-plugins)
 porting kit. The generic VST2 wrapper from that project is compiled into the
-plugin. Its source and the scripts used to produce the binary and skin are
-publicly available in the
-[SamplingHigh fork](https://github.com/SamplingHigh/mpc-vst-plugins). Releases
-0.1.11 and 0.1.12 use branch `setbfree-drawbar-support`, commit
+plugin. Release 0.3.1 uses Open MPC commit
+`0dc17120cd7e952e95eeecdd820ac9e495a75ee9`. Releases 0.1.11 and 0.1.12 used
+the earlier `setbfree-drawbar-support` work at commit
 `66eca176028b5fd63622dd7769451d5e28eb11a1`.

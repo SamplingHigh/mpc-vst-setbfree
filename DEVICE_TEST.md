@@ -125,3 +125,22 @@ automation; this input path cannot be exercised over SSH.
   the asset is therefore published only on the project release under the
   non-catalog filename `setBfree-Organ-0.3.0-gen2-experimental.zip` and is
   withheld from the public plugin catalog.
+
+## 2026-11-14 — release 0.3.1 on Force MPC OS 3.10.1
+
+- Rebuilt the 80-parameter ARMv7 plugin and five-page skin with the Open MPC
+  wrapper and release-tool revision
+  `0dc17120cd7e952e95eeecdd820ac9e495a75ee9`; the complete host test passed.
+- Renamed the installed plugin folder and manufacturer from `Force Runtime` to
+  `SamplingHigh`, preserving UID `53624631`, parameter indices and project
+  compatibility (`Compat 0`).
+- Installed the plugin in
+  `/media/SSD_500/VST2 Plugins/SamplingHigh - VST - setBfree Organ` with its
+  MPC OS 3.10.1 `plugin.json`. Confirmed exactly one MPC registry entry, a
+  running MPC process and an active `acvs` service.
+- Verified touchscreen operation, audio, Data Wheel and Q-Link control on an
+  Akai Force running MPC OS 3.10.1. Corrected the UPPER-page rotary labels to
+  `SLOW / STOP / FAST`; the underlying selector value order is unchanged.
+- Evaluated visible hardware-focus outlines and removed them because the MPC
+  focus component follows the full touch bounds, which intentionally overlap
+  on dense pages. Hardware focus and Q-Link/Data Wheel operation remain active.

@@ -1,22 +1,18 @@
 # Source for the binary release
 
-The complete corresponding source for release 0.3.0 is the `v0.3.0` tag:
+The complete corresponding source for release 0.3.1 is the `v0.3.1` tag:
 
-<https://github.com/SamplingHigh/mpc-vst-setbfree/tree/v0.3.0>
+<https://github.com/SamplingHigh/mpc-vst-setbfree/tree/v0.3.1>
 
 The generic MPC VST2 wrapper compiled into the plugin and the skin-generation
-tools are in the public `mpc-vst-plugins` fork. The build uses branch
-`feature/skin-studio-force-controls`, commit
-`cf1a5609ed706fc966f653bb144e979d07c67b74`:
+tools are in the public Open MPC `mpc-vst-plugins` repository. The build and
+release workflow are pinned to commit
+`0dc17120cd7e952e95eeecdd820ac9e495a75ee9`:
 
-<https://github.com/SamplingHigh/mpc-vst-plugins/tree/cf1a5609ed706fc966f653bb144e979d07c67b74>
+<https://github.com/open-mpc/mpc-vst-plugins/tree/0dc17120cd7e952e95eeecdd820ac9e495a75ee9>
 
-The portable release package is generated with `release.py` from upstream
-tooling commit `593324542eaeeaaa0d9ca9cc43ba7871cd1f8732`.
-
-The ARMv7 and aarch64 assets use the same setBfree and wrapper sources, plugin
-UID, parameter indices and state format. Only the compiler target and packaged
-ELF binary differ. Reproduction commands for both assets are in
+The ARMv7 and experimental aarch64 builds use the same setBfree sources, plugin
+UID, parameter indices and state format. Reproduction commands are in
 `RELEASING.md`.
 
 The port and combined binary are licensed under GPL-2.0-or-later. See

@@ -10,5 +10,11 @@
     "device": "Akai Force",
     "firmware": "3.9.1.2",
     "date": "2026-10-24"
+  },
+  {
+    "version": "0.3.1",
+    "device": "Akai Force",
+    "firmware": "3.10.1",
+    "date": "2026-11-14"
   }
 ]

@@ -8,7 +8,7 @@ run on Gen2 hardware.
 
 ![setBfree Organ running on Akai Force](docs/images/setbfree-organ.png)
 
-The current release is **0.3.0**. It provides:
+The current release is **0.3.1**. It provides:
 
 - upper and lower drawbars with traditional colour groups, plus 16', 8' and 4'
   pedal controls;
@@ -49,27 +49,29 @@ SETTINGS page and are intended for sound setup rather than performance moves.
 Download the package for the device from the GitHub release and follow its
 included `INSTALL.md`:
 
-- `setBfree-Organ-0.3.0-mpc-armv7.zip`: Force and first-generation MPCs;
-- `setBfree-Organ-0.3.0-gen2-experimental.zip`: Gen2 MPCs, experimental and
-  hardware untested. Its intentionally non-catalog filename prevents the public
-  catalog from advertising it before a physical-device confirmation.
+- `setBfree-Organ-0.3.1-mpc-armv7.zip`: scripted installer for Force and
+  first-generation MPCs;
+- `setBfree-Organ-0.3.1-mpc-sdk.zip`: MPC OS 3.10.1 folder format for Force
+  and first-generation MPCs. Unzip it and copy the plugin folder into a drive's
+  `VST2 Plugins` directory.
 
-Installation requires root SSH access and restarts the MPC application. The
-two packages use the same plugin UID, parameter indices and state format, so
-projects remain compatible across architectures. Gen2 needs a writable
-removable-media `Synths` folder passed to the installer with `-t`; its internal
-`/synths/Synths` mount is read-only on the hardware tested by the porting kit.
+The SDK-format package needs no root access on MPC OS 3.10.1. The scripted
+ARMv7 installer also supports the earlier `Synths` layout and restarts the MPC
+application. Release 0.3.1 keeps the same plugin UID, parameter indices and
+state format as 0.3.0, so saved projects remain compatible. The experimental
+Gen2 build remains available only on the project page and is not advertised in
+the public catalog until it has been verified on physical Gen2 hardware.
 
 ## Build and test
 
 The build uses the public
-[mpc-vst-plugins](https://github.com/SamplingHigh/mpc-vst-plugins) porting kit. Clone
+[mpc-vst-plugins](https://github.com/open-mpc/mpc-vst-plugins) porting kit. Clone
 both repositories, check out the tested porting-kit revision, then point
 `MPC_VST` at the kit:
 
 ```sh
-git clone https://github.com/SamplingHigh/mpc-vst-plugins.git
-git -C mpc-vst-plugins checkout cf1a5609ed706fc966f653bb144e979d07c67b74
+git clone https://github.com/open-mpc/mpc-vst-plugins.git
+git -C mpc-vst-plugins checkout 0dc17120cd7e952e95eeecdd820ac9e495a75ee9
 git clone https://github.com/SamplingHigh/mpc-vst-setbfree.git
 cd mpc-vst-setbfree
 MPC_VST=../mpc-vst-plugins ./test.sh
@@ -96,11 +98,10 @@ and restarts the MPC application without replacing the plugin binary. Set
 `FORCE_HOST`, pass `-ForceHost` to the PowerShell script, or put the device
 address in a local `.force-host` file.
 
-Both 0.3.0 binaries have a highest required GLIBC symbol of 2.29. The ARMv7
-build targets ARM hard-float with glibc 2.31 compatibility. The aarch64 build
-targets Gen2 MPC OS 3.x; it passes the ARM64 functional host test and catalog
-package validation, but is not marked as hardware verified and is deliberately
-not submitted to the public plugin catalog yet.
+The 0.3.1 ARMv7 binary targets ARM hard-float with glibc 2.31 compatibility and
+is verified on Force MPC OS 3.10.1. The source also supports an aarch64 Gen2
+build, but that target remains hardware-unverified and is deliberately not
+submitted to the public plugin catalog yet.
 
 ## Source and licence
 

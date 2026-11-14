@@ -1,8 +1,8 @@
 {
   "name": "setBfree Organ",
-  "vendor": "Force Runtime",
+  "vendor": "SamplingHigh",
   "uid": "SbF1",
-  "version": 3000,
+  "version": 3010,
   "so": "setbfree.so",
   "targets": [
     "armv7",

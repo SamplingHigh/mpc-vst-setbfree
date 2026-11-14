@@ -1,0 +1,37 @@
+name: Release VST
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Release version
+        required: true
+        default: 0.3.1
+        type: string
+      dry_run:
+        description: Build artifacts without creating a draft release
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  vst:
+    permissions:
+      contents: write
+    uses: open-mpc/mpc-vst-plugins/.github/workflows/vst-release.yml@0dc17120cd7e952e95eeecdd820ac9e495a75ee9
+    with:
+      tag: v${{ inputs.version }}
+      version: ${{ inputs.version }}
+      tools_ref: 0dc17120cd7e952e95eeecdd820ac9e495a75ee9
+      vst_dir: .
+      build: |
+        sudo apt-get update -qq
+        sudo apt-get install -y -qq binutils-arm-linux-gnueabihf
+        MPC_VST="$MPC_VST" ZIG=zig ./build-zig.sh
+      host_test: ./test.sh
+      extra: LICENSE:licenses/GPL-2.0-or-later.txt THIRD_PARTY_NOTICES.md:licenses/THIRD_PARTY_NOTICES.md SOURCE.md:licenses/SOURCE.md
+      about: Native tonewheel organ with three drawbar manuals, rotary speaker, effects and keyboard splits.
+      plugin_id: setbfree-organ
+      license: GPL-2.0-or-later
+      zig: 0.17.0
+      dry_run: ${{ inputs.dry_run }}
