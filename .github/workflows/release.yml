@@ -27,6 +27,8 @@ jobs:
       build: |
         sudo apt-get update -qq
         sudo apt-get install -y -qq binutils-arm-linux-gnueabihf
+        python3 -m pip install --disable-pip-version-check playwright
+        python3 -m playwright install chromium
         MPC_VST="$MPC_VST" ZIG=zig ./build-zig.sh
       host_test: ./test.sh
       extra: LICENSE:licenses/GPL-2.0-or-later.txt THIRD_PARTY_NOTICES.md:licenses/THIRD_PARTY_NOTICES.md SOURCE.md:licenses/SOURCE.md
