@@ -5,7 +5,7 @@ set -euo pipefail
 
 here="$(cd "$(dirname "$0")" && pwd)"
 if [ -z "${MPC_VST:-}" ]; then
-  for candidate in "$here/../mpc-vst-plugins" "$here/../../working/research/mpc-vst-plugins-current"; do
+  for candidate in "$here/../mpc-vst-plugins" "$here/../../working/research/mpc-vst-plugins-0dc1712" "$here/../../working/research/mpc-vst-plugins-current"; do
     if [ -f "$candidate/tools/gen_vst.py" ]; then
       MPC_VST="$candidate"
       break

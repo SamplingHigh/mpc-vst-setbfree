@@ -140,7 +140,10 @@ automation; this input path cannot be exercised over SSH.
   running MPC process and an active `acvs` service.
 - Verified touchscreen operation, audio, Data Wheel and Q-Link control on an
   Akai Force running MPC OS 3.10.1. Corrected the UPPER-page rotary labels to
-  `SLOW / STOP / FAST`; the underlying selector value order is unchanged.
+  `SLOW / STOP / FAST`; the underlying selector value order is unchanged. The
+  `ROTARY` title is a separately positioned static label so the pinned release
+  generator cannot overlap it with the 42 px vertical selector buttons. The
+  final placement was visually confirmed on the Force display.
 - Evaluated visible hardware-focus outlines and removed them because the MPC
   focus component follows the full touch bounds, which intentionally overlap
   on dense pages. Hardware focus and Q-Link/Data Wheel operation remain active.

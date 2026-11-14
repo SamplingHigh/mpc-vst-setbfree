@@ -6,6 +6,7 @@ cd /d "%~dp0"
 rem Prefer an explicitly configured mpc-vst-plugins checkout, then the
 rem checkout used by this Force development workspace.
 set "STUDIO_ROOT=%MPC_VST%"
+if not exist "%STUDIO_ROOT%\tools\studio.py" set "STUDIO_ROOT=%~dp0..\..\working\research\mpc-vst-plugins-0dc1712"
 if not exist "%STUDIO_ROOT%\tools\studio.py" set "STUDIO_ROOT=%~dp0..\..\working\research\mpc-vst-plugins-current"
 if not exist "%STUDIO_ROOT%\tools\studio.py" (
   echo Could not find mpc-vst-plugins\tools\studio.py.
