@@ -2,10 +2,13 @@
 
 Release 0.4.0 is built and packaged with the Open MPC porting kit pinned to:
 
-`open-mpc/mpc-vst-plugins@0dc17120cd7e952e95eeecdd820ac9e495a75ee9`
+`open-mpc/mpc-vst-plugins@9e7c0010789d8728f1f6fe3e96d2098a530080a7`
 
 The same revision is present in both `uses:` and `tools_ref:` in
-`.github/workflows/release.yml`. The reusable workflow builds the ARMv7 plugin,
+`.github/workflows/release.yml`. This revision includes the reusable workflow's
+`retire` input; the release retires the previous
+`SamplingHigh - VST - setbfree Organ` folder when its manifest belongs to this
+plugin. The reusable workflow builds the ARMv7 plugin,
 runs the host test, validates the package and creates a draft GitHub release.
 It also produces the MPC OS 3.10.1 SDK-format folder zip.
 
@@ -21,7 +24,7 @@ Before publishing the draft:
 2. Install the exact ARMv7 artifact on a Force and test audio, every page,
    touchscreen control, Q-Links, Data Wheel, project save and project reload.
 3. Confirm `tested.json` records the tested device and firmware.
-4. Publish the draft release. Publishing creates tag `v0.3.1`.
+4. Publish the draft release. Publishing creates tag `v0.4.0`.
 
 The release and catalog target ARMv7 first-generation devices only. Do not
 publish or advertise a Gen2 build without verification on physical hardware.

@@ -18,11 +18,11 @@ jobs:
   vst:
     permissions:
       contents: write
-    uses: open-mpc/mpc-vst-plugins/.github/workflows/vst-release.yml@0dc17120cd7e952e95eeecdd820ac9e495a75ee9
+    uses: open-mpc/mpc-vst-plugins/.github/workflows/vst-release.yml@9e7c0010789d8728f1f6fe3e96d2098a530080a7
     with:
       tag: v${{ inputs.version }}
       version: ${{ inputs.version }}
-      tools_ref: 0dc17120cd7e952e95eeecdd820ac9e495a75ee9
+      tools_ref: 9e7c0010789d8728f1f6fe3e96d2098a530080a7
       vst_dir: .
       build: |
         sudo apt-get update -qq
@@ -32,6 +32,7 @@ jobs:
         MPC_VST="$MPC_VST" ZIG=zig ./build-zig.sh
       host_test: ./test.sh
       extra: LICENSE:licenses/GPL-2.0-or-later.txt THIRD_PARTY_NOTICES.md:licenses/THIRD_PARTY_NOTICES.md SOURCE.md:licenses/SOURCE.md
+      retire: SamplingHigh - VST - setbfree Organ
       about: Native tonewheel organ with three drawbar manuals, rotary speaker, effects and keyboard splits.
       plugin_id: setbfree-organ
       license: GPL-2.0-or-later
