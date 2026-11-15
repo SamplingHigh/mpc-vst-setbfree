@@ -313,7 +313,7 @@
         "Soft",
         "Normal"
       ],
-      "default": 1
+      "default": 0
     },
     {
       "key": "perc_decay",
@@ -398,7 +398,7 @@
       "name": "Drive Character",
       "min": 0,
       "max": 100,
-      "default": 47,
+      "default": 44,
       "display": "int",
       "unit": "%"
     },
@@ -407,7 +407,7 @@
       "name": "Drive Input",
       "min": 0,
       "max": 100,
-      "default": 16,
+      "default": 14,
       "display": "int",
       "unit": "%"
     },
@@ -416,7 +416,7 @@
       "name": "Drive Output",
       "min": 0,
       "max": 100,
-      "default": 47,
+      "default": 30,
       "display": "int",
       "unit": "%"
     },
@@ -499,7 +499,7 @@
       "name": "Compartment Crosstalk",
       "min": 0,
       "max": 1,
-      "default": 0.01,
+      "default": 0,
       "dynamic_display": true
     },
     {
@@ -515,7 +515,7 @@
       "name": "Terminal Crosstalk",
       "min": 0,
       "max": 1,
-      "default": 0.01,
+      "default": 0,
       "dynamic_display": true
     },
     {
@@ -713,7 +713,7 @@
       "name": "Drive Bias",
       "min": 0,
       "max": 100,
-      "default": 53.47,
+      "default": 100,
       "display": "int",
       "unit": "%"
     },
@@ -722,7 +722,7 @@
       "name": "Drive Feedback",
       "min": 0,
       "max": 100,
-      "default": 62.14,
+      "default": 26,
       "display": "int",
       "unit": "%"
     },
@@ -731,7 +731,7 @@
       "name": "Drive Power Sag",
       "min": 0,
       "max": 100,
-      "default": 18.8,
+      "default": 17,
       "display": "int",
       "unit": "%"
     },
@@ -743,6 +743,17 @@
         "Sustain"
       ],
       "default": 0
+    },
+    {
+      "key": "tone_generator_model",
+      "name": "Tone Generator Model",
+      "options": [
+        "91 / No Foldback",
+        "82 / 9 Foldback",
+        "91 / 12 Foldback"
+      ],
+      "default": 2,
+      "qlink_ticks": 2
     }
   ]
 }

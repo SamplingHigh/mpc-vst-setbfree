@@ -1,6 +1,6 @@
 # Releasing
 
-Release 0.3.1 is built and packaged with the Open MPC porting kit pinned to:
+Release 0.4.0 is built and packaged with the Open MPC porting kit pinned to:
 
 `open-mpc/mpc-vst-plugins@0dc17120cd7e952e95eeecdd820ac9e495a75ee9`
 
@@ -11,9 +11,9 @@ It also produces the MPC OS 3.10.1 SDK-format folder zip.
 
 ## GitHub Actions release
 
-Run the **Release VST** workflow with version `0.3.1`. A dry run builds the
+Run the **Release VST** workflow with version `0.4.0`. A dry run builds the
 artifacts without creating a release; a normal run creates or updates draft tag
-`v0.3.1`.
+`v0.4.0`.
 
 Before publishing the draft:
 

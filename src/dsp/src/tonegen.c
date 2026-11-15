@@ -834,6 +834,29 @@ findTransformerNeighbours (int w, int* ep, int* wp)
 }
 
 /**
+ * Convert the C-based terminal numbering used by the default wiring tables
+ * to the physical wheel number used by the selected tone-generator model.
+ *
+ * The 82-wheel generator starts on A: its terminal 10 is physical wheel 1
+ * and terminal 91 is physical wheel 82.  Keeping the terminal number as the
+ * wheel number transposes this model up by nine semitones and addresses nine
+ * oscillators that do not exist.
+ */
+static short
+defaultWheelNumber (const struct b_tonegen* t, int terminal)
+{
+	if (t->tgVariant == TG_82FB09) {
+		if ((terminal < 10) || (91 < terminal))
+			return 0;
+		return (short)(terminal - 9);
+	}
+
+	if ((terminal < 1) || (NOF_WHEELS < terminal))
+		return 0;
+	return (short)terminal;
+}
+
+/**
  * This routine applies default models to the configuration.
  */
 static void
@@ -846,14 +869,18 @@ applyDefaultConfiguration (struct b_tonegen* t)
 
 	for (i = 1; i <= NOF_WHEELS; i++) {
 		if (t->terminalMix[i] == NULL) {
+			short wheel = defaultWheelNumber (t, i);
+			if (wheel == 0)
+				continue;
 			lep                      = newConfigListElement (t);
-			LE_WHEEL_NUMBER_OF (lep) = (short)i;
+			LE_WHEEL_NUMBER_OF (lep) = wheel;
 			LE_WHEEL_LEVEL_OF (lep)  = 1.0 - t->defaultCompartmentCrosstalk;
 			appendListElement (&(t->terminalMix[i]), lep);
 			if (0.0 < t->defaultCompartmentCrosstalk) {
-				if (0 < wheelPairs[i]) {
+				wheel = defaultWheelNumber (t, wheelPairs[i]);
+				if (0 < wheel) {
 					lep                      = newConfigListElement (t);
-					LE_WHEEL_NUMBER_OF (lep) = wheelPairs[i];
+					LE_WHEEL_NUMBER_OF (lep) = wheel;
 					LE_WHEEL_LEVEL_OF (lep)  = t->defaultCompartmentCrosstalk;
 					appendListElement (&(t->terminalMix[i]), lep);
 				}
@@ -876,6 +903,7 @@ applyDefaultConfiguration (struct b_tonegen* t)
 
 			findTransformerNeighbours (i, &east, &west);
 
+			east = defaultWheelNumber (t, east);
 			if (0 < east) {
 				lep                      = newConfigListElement (t);
 				LE_WHEEL_NUMBER_OF (lep) = (short)east;
@@ -883,6 +911,7 @@ applyDefaultConfiguration (struct b_tonegen* t)
 				appendListElement (&(t->terminalMix[i]), lep);
 			}
 
+			west = defaultWheelNumber (t, west);
 			if (0 < west) {
 				lep                      = newConfigListElement (t);
 				LE_WHEEL_NUMBER_OF (lep) = (short)west;
@@ -897,8 +926,11 @@ applyDefaultConfiguration (struct b_tonegen* t)
 		for (i = 1; i <= NOF_WHEELS; i++) {
 			int east = 0;
 			int west = 0;
+			if (defaultWheelNumber (t, i) == 0)
+				continue;
 			findEastWestNeighbours (terminalStrip, i, &east, &west);
 
+			east = defaultWheelNumber (t, east);
 			if (0 < east) {
 				lep                      = newConfigListElement (t);
 				LE_WHEEL_NUMBER_OF (lep) = (short)east;
@@ -906,6 +938,7 @@ applyDefaultConfiguration (struct b_tonegen* t)
 				appendListElement (&(t->terminalMix[i]), lep);
 			}
 
+			west = defaultWheelNumber (t, west);
 			if (0 < west) {
 				lep                      = newConfigListElement (t);
 				LE_WHEEL_NUMBER_OF (lep) = (short)west;

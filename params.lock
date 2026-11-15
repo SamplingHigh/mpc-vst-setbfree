@@ -78,3 +78,4 @@ drive_bias
 drive_feedback
 drive_sag
 sustain_enable
+tone_generator_model

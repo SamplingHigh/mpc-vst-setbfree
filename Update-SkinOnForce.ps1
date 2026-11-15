@@ -26,7 +26,7 @@ if (-not $ForceHost) {
 if (-not $ForcePassword -and (Test-Path -LiteralPath $passwordFile)) {
     $ForcePassword = (Get-Content -Raw -LiteralPath $passwordFile).Trim()
 }
-$skinName = "SamplingHigh - VST - setBfree Organ"
+$skinName = "SamplingHigh - VST - SetBfree Organ"
 $skinRoot = Join-Path $project "build\skin\$skinName"
 $archive = Join-Path $project "build\setbfree-skin-update.tgz"
 $remoteScript = Join-Path $project "update-skin-remote.sh"

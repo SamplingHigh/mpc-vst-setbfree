@@ -19,7 +19,7 @@
 #include "state.h"
 
 #define BLOCK 128
-#define PARAM_COUNT 80
+#define PARAM_COUNT 81
 
 double SampleRateD = 44100.0;
 
@@ -33,7 +33,8 @@ typedef enum { SCALE_RAW, SCALE_DRAWBAR, SCALE_PERCENT, SCALE_TOGGLE,
                SCALE_SOFT_LEVEL, SCALE_PERC_GAIN, SCALE_MANUAL_VIBRATO,
                SCALE_CROSSTALK, SCALE_HORN_SLOW_RPM, SCALE_HORN_FAST_RPM,
                SCALE_DRUM_SLOW_RPM, SCALE_DRUM_FAST_RPM, SCALE_HORN_TIME,
-               SCALE_DRUM_TIME, SCALE_SCANNER_RATE, SCALE_SCANNER_DEPTH } scale_t;
+               SCALE_DRUM_TIME, SCALE_SCANNER_RATE, SCALE_SCANNER_DEPTH,
+               SCALE_TONE_MODEL } scale_t;
 
 typedef struct {
     const char *key;
@@ -78,7 +79,7 @@ static const param_def_t defs[PARAM_COUNT] = {
     {"pedal_1", "pedal.drawbar1", 8, SCALE_DRAWBAR},
 
     {"percussion", "percussion.enable", 0, SCALE_TOGGLE},
-    {"perc_volume", "percussion.volume", 1, SCALE_TOGGLE},
+    {"perc_volume", "percussion.volume", 0, SCALE_TOGGLE},
     {"perc_decay", "percussion.decay", 0, SCALE_TOGGLE},
     {"perc_harmonic", "percussion.harmonic", 1, SCALE_TOGGLE},
     {"vibrato", "vibrato.knob", 0, SCALE_VIBRATO},
@@ -87,9 +88,9 @@ static const param_def_t defs[PARAM_COUNT] = {
     {"swell", "swellpedal1", 100, SCALE_PERCENT},
     {"rotary", "rotary.speed-preset", 1, SCALE_ROTARY},
     {"overdrive", "overdrive.enable", 0, SCALE_TOGGLE},
-    {"drive_character", "overdrive.character", 47, SCALE_PERCENT},
-    {"drive_input", "overdrive.inputgain", 16, SCALE_PERCENT},
-    {"drive_output", "overdrive.outputgain", 47, SCALE_PERCENT},
+    {"drive_character", "overdrive.character", 44, SCALE_PERCENT},
+    {"drive_input", "overdrive.inputgain", 14, SCALE_PERCENT},
+    {"drive_output", "overdrive.outputgain", 30, SCALE_PERCENT},
     {"reverb", "reverb.mix", 10, SCALE_PERCENT},
 
     {"perc_fast_time", NULL, 1.0, SCALE_SECONDS},
@@ -99,9 +100,9 @@ static const param_def_t defs[PARAM_COUNT] = {
     {"perc_gain", NULL, 11.0, SCALE_PERC_GAIN},
     {"vibrato_upper_mode", NULL, 3, SCALE_MANUAL_VIBRATO},
     {"vibrato_lower_mode", NULL, 3, SCALE_MANUAL_VIBRATO},
-    {"compartment_crosstalk", NULL, 0.01, SCALE_CROSSTALK},
+    {"compartment_crosstalk", NULL, 0.0, SCALE_CROSSTALK},
     {"transformer_crosstalk", NULL, 0.0, SCALE_CROSSTALK},
-    {"terminal_crosstalk", NULL, 0.01, SCALE_CROSSTALK},
+    {"terminal_crosstalk", NULL, 0.0, SCALE_CROSSTALK},
     {"wiring_crosstalk", NULL, 0.01, SCALE_CROSSTALK},
 
     {"horn_slow_speed", NULL, 40.32, SCALE_HORN_SLOW_RPM},
@@ -126,10 +127,11 @@ static const param_def_t defs[PARAM_COUNT] = {
     {"pedal_level", NULL, 60, SCALE_PERCENT},
     {"reverb_input", NULL, 10, SCALE_PERCENT},
     {"reverb_output", NULL, 100, SCALE_RAW},
-    {"drive_bias", "xov.ctl_biased", 53.47, SCALE_PERCENT},
-    {"drive_feedback", "xov.ctl_biased_gfb", 62.14, SCALE_PERCENT},
-    {"drive_sag", "xov.ctl_sagtobias", 18.8, SCALE_PERCENT},
+    {"drive_bias", "xov.ctl_biased", 100, SCALE_PERCENT},
+    {"drive_feedback", "xov.ctl_biased_gfb", 26, SCALE_PERCENT},
+    {"drive_sag", "xov.ctl_sagtobias", 17, SCALE_PERCENT},
     {"sustain_enable", NULL, 0, SCALE_TOGGLE},
+    {"tone_generator_model", NULL, 2, SCALE_TONE_MODEL},
 };
 
 enum {
@@ -148,7 +150,7 @@ enum {
     P_SCANNER_RATE, P_SCANNER_V1_DEPTH, P_SCANNER_V2_DEPTH,
     P_SCANNER_V3_DEPTH, P_UPPER_LEVEL, P_LOWER_LEVEL, P_PEDAL_LEVEL,
     P_REVERB_INPUT, P_REVERB_OUTPUT, P_DRIVE_BIAS, P_DRIVE_FEEDBACK,
-    P_DRIVE_SAG, P_SUSTAIN_ENABLE
+    P_DRIVE_SAG, P_SUSTAIN_ENABLE, P_TONE_GENERATOR_MODEL
 };
 
 typedef struct {
@@ -285,6 +287,12 @@ static void apply_param(organ_t *o, int i) {
          * rebuild, rather than allocating a complete organ on every pixel. */
         o->rebuild_delay = 8;
         return;
+    case P_TONE_GENERATOR_MODEL:
+        /* The tonewheel allocation and foldback tables are created during
+         * initToneGenerator(). Coalesce selector/Q-Link motion into one
+         * rebuild, just like the startup-only crosstalk matrix controls. */
+        o->rebuild_delay = 8;
+        return;
     case P_HORN_SLOW_SPEED:
         o->core.whirl->hornRPMslow = (float)o->value[i];
         computeRotationSpeeds(o->core.whirl);
@@ -410,6 +418,8 @@ static int init_core(organ_t *o, b_instance *core) {
     core->synth->defaultTransformerCrosstalk = o->value[P_TRANSFORMER_CROSSTALK];
     core->synth->defaultTerminalStripCrosstalk = o->value[P_TERMINAL_CROSSTALK];
     core->synth->defaultWiringCrosstalk = o->value[P_WIRING_CROSSTALK];
+    setToneGeneratorModel(core->synth,
+        clampi((int)lround(o->value[P_TONE_GENERATOR_MODEL]), 0, 2));
     initControllerTable(core->midicfg);
     midiPrimeControllerMapping(core->midicfg);
     initToneGenerator(core->synth, core->midicfg);
@@ -431,7 +441,8 @@ static int rebuild_core(organ_t *o) {
     o->sustain_down = 0;
     memset(o->sustained_notes, 0, sizeof(o->sustained_notes));
     for (int i = 0; i < PARAM_COUNT; ++i)
-        if (i < P_COMPARTMENT_CROSSTALK || i > P_WIRING_CROSSTALK) apply_param(o, i);
+        if ((i < P_COMPARTMENT_CROSSTALK || i > P_WIRING_CROSSTALK) &&
+            i != P_TONE_GENERATOR_MODEL) apply_param(o, i);
     midi_panic(&old);
     free_core(&old);
     return 1;
@@ -512,9 +523,12 @@ static void set_one(organ_t *o, const char *key, const char *text) {
     else if (defs[i].scale == SCALE_DRUM_TIME) v = clampd(v, 0.5, 10.0);
     else if (defs[i].scale == SCALE_SCANNER_RATE) v = clampd(v, 4.0, 22.0);
     else if (defs[i].scale == SCALE_SCANNER_DEPTH) v = clampd(v, 0.0, 12.0);
+    else if (defs[i].scale == SCALE_TONE_MODEL) v = clampi((int)lround(v), 0, 2);
     if (i == P_REVERB_OUTPUT) v = clampd(v, 0.0, 200.0);
+    int same_tone_model = i == P_TONE_GENERATOR_MODEL &&
+        (int)lround(o->value[i]) == (int)lround(v);
     o->value[i] = v;
-    apply_param(o, i);
+    if (!same_tone_model) apply_param(o, i);
     /* The published 0.1.12 project state contains the three original
      * vibrato parameters. Mirror them to the new manual selectors while
      * loading old projects; new state later overrides these compatibility

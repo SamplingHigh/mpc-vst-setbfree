@@ -1,8 +1,8 @@
 {
-  "name": "setBfree Organ",
+  "name": "SetBfree Organ",
   "vendor": "SamplingHigh",
   "uid": "SbF1",
-  "version": 3010,
+  "version": 4000,
   "so": "setbfree.so",
   "targets": [
     "armv7"

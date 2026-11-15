@@ -8,9 +8,14 @@ if [ -f "$target_file" ]; then
 else
   plugin_root='/sdcard/Synths'
 fi
-target="$plugin_root/SamplingHigh - VST - setBfree Organ"
+target="$plugin_root/SamplingHigh - VST - SetBfree Organ"
+lowercase_target="$plugin_root/SamplingHigh - VST - setBfree Organ"
 legacy_target="$plugin_root/Force Runtime - VST - setBfree Organ"
-if [ ! -d "$target" ] && [ -d "$legacy_target" ]; then
+if [ ! -d "$target" ] && [ -d "$lowercase_target" ]; then
+  # Releases up to 0.3.1 used the official setBfree spelling in the folder.
+  # Keep that path stable while allowing the VST display name to sort under S.
+  target="$lowercase_target"
+elif [ ! -d "$target" ] && [ -d "$legacy_target" ]; then
   # Keep skin-only testing usable until the next full package migrates the
   # installed plugin directory to the SamplingHigh vendor name.
   target="$legacy_target"
