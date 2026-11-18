@@ -6,7 +6,7 @@ on:
       version:
         description: Release version
         required: true
-        default: 0.4.0
+        default: 0.4.1
         type: string
       dry_run:
         description: Build artifacts without creating a draft release
@@ -32,7 +32,6 @@ jobs:
         MPC_VST="$MPC_VST" ZIG=zig ./build-zig.sh
       host_test: ./test.sh
       extra: LICENSE:licenses/GPL-2.0-or-later.txt THIRD_PARTY_NOTICES.md:licenses/THIRD_PARTY_NOTICES.md SOURCE.md:licenses/SOURCE.md
-      retire: SamplingHigh - VST - setbfree Organ
       about: Native tonewheel organ with three drawbar manuals, rotary speaker, effects and keyboard splits.
       plugin_id: setbfree-organ
       license: GPL-2.0-or-later

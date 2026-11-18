@@ -3,11 +3,11 @@
 A native VST2 port of the [setBfree](https://github.com/pantherb/setBfree)
 tonewheel organ engine for first-generation Akai MPC standalone devices and
 Force. It runs in MPC's plugin host and has a native touchscreen skin. Release
-0.4.0 is verified on Force running MPC OS 3.10.1.
+0.4.1 is verified on Force running MPC OS 3.10.1.
 
 ![SetBfree Organ running on Akai Force](docs/images/setbfree-organ.png)
 
-The current release is **0.4.0**. It provides:
+The current release is **0.4.1**. It provides:
 
 - upper and lower drawbars with traditional colour groups, plus 16', 8' and 4'
   pedal controls;
@@ -50,15 +50,15 @@ SETTINGS page and are intended for sound setup rather than performance moves.
 Download the package for the device from the GitHub release and follow its
 included `INSTALL.md`:
 
-- `SetBfree-Organ-0.4.0-mpc-armv7.zip`: scripted installer for Force and
+- `SetBfree-Organ-0.4.1-mpc-armv7.zip`: scripted installer for Force and
   first-generation MPCs;
-- `SetBfree-Organ-0.4.0-mpc-sdk.zip`: MPC OS 3.10.1 folder format for Force
+- `SetBfree-Organ-0.4.1-mpc-sdk.zip`: MPC OS 3.10.1 folder format for Force
   and first-generation MPCs. Unzip it and copy the plugin folder into a drive's
   `VST2 Plugins` directory.
 
 The SDK-format package needs no root access on MPC OS 3.10.1. The scripted
 ARMv7 installer also supports the earlier `Synths` layout and restarts the MPC
-application. Release 0.4.0 keeps the same plugin UID, existing parameter
+application. Release 0.4.1 keeps the same plugin UID, existing parameter
 indices and state format as 0.3.1; its new parameter is appended, so saved
 projects remain compatible. Gen2 is not a
 supported release target because no build has been verified on physical Gen2
@@ -97,7 +97,7 @@ and restarts the MPC application without replacing the plugin binary. Set
 `FORCE_HOST`, pass `-ForceHost` to the PowerShell script, or put the device
 address in a local `.force-host` file.
 
-The 0.4.0 ARMv7 binary targets ARM hard-float with glibc 2.31 compatibility and
+The 0.4.1 ARMv7 binary targets ARM hard-float with glibc 2.31 compatibility and
 is verified on Force MPC OS 3.10.1.
 
 ## Source and licence
